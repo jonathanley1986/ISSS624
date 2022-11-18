@@ -34,3 +34,43 @@ cyclingpath <- st_read(dsn = "data/geospatial", layer = "CyclingPath")
 ```{r}
 preschool = st_read("data/geospatial/pre-schools-location-kml.kml")
 ```
+
+## Checking Content of Simple Feature Data Frame
+
+### Working with st_geometry()
+
+```{r}
+st_geometry(mpsz)
+```
+
+### Working with glimpse()
+
+```{r}
+glimpse(mpsz)
+```
+
+### Working with head()
+
+```{r}
+head(mpsz, n=5)
+```
+
+## Plotting Geospatial Data
+
+### Plotting in R Graphic
+
+```{r}
+plot(mpsz)
+```
+
+### Plotting by Geometry
+
+```{r}
+plot(st_geometry(mpsz))
+```
+
+### Plotting by Specific Attribute
+
+```{r}
+plot(mpsz["PLN_AREA_N"])
+```
