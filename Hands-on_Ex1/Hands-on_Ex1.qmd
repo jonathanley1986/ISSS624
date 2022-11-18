@@ -17,8 +17,20 @@ pacman::p_load(sf, tidyverse)
 
 ## Importing Geospatial Data
 
-### Importing polygon feature data
+### Importing polygon feature data in Shapefile format
 
 ```{r}
 mpsz <- st_read(dsn = "data/geospatial", layer = "MP14_SUBZONE_WEB_PL")
+```
+
+### Importing Polyline feature data in Shapefile Format
+
+```{r}
+cyclingpath <- st_read(dsn = "data/geospatial", layer = "CyclingPath")
+```
+
+### Importing GIS feature data in KML format
+
+```{r}
+preschool = st_read("data/geospatial/pre-schools-location-kml.kml")
 ```
