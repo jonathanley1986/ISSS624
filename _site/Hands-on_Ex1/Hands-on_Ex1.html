@@ -178,7 +178,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
   <li><a href="#importing-geospatial-data" id="toc-importing-geospatial-data" class="nav-link" data-scroll-target="#importing-geospatial-data">Importing Geospatial Data</a>
   <ul class="collapse">
-  <li><a href="#importing-polygon-feature-data" id="toc-importing-polygon-feature-data" class="nav-link" data-scroll-target="#importing-polygon-feature-data">Importing polygon feature data</a></li>
+  <li><a href="#importing-polygon-feature-data-in-shapefile-format" id="toc-importing-polygon-feature-data-in-shapefile-format" class="nav-link" data-scroll-target="#importing-polygon-feature-data-in-shapefile-format">Importing polygon feature data in Shapefile format</a></li>
+  <li><a href="#importing-polyline-feature-data-in-shapefile-format" id="toc-importing-polyline-feature-data-in-shapefile-format" class="nav-link" data-scroll-target="#importing-polyline-feature-data-in-shapefile-format">Importing Polyline feature data in Shapefile Format</a></li>
+  <li><a href="#importing-gis-feature-data-in-kml-format" id="toc-importing-gis-feature-data-in-kml-format" class="nav-link" data-scroll-target="#importing-gis-feature-data-in-kml-format">Importing GIS feature data in KML format</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -215,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="importing-geospatial-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-geospatial-data">Importing Geospatial Data</h2>
-<section id="importing-polygon-feature-data" class="level3">
-<h3 class="anchored" data-anchor-id="importing-polygon-feature-data">Importing polygon feature data</h3>
+<section id="importing-polygon-feature-data-in-shapefile-format" class="level3">
+<h3 class="anchored" data-anchor-id="importing-polygon-feature-data-in-shapefile-format">Importing polygon feature data in Shapefile format</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mpsz <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial"</span>, <span class="at">layer =</span> <span class="st">"MP14_SUBZONE_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -228,6 +230,39 @@ Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
+</div>
+</div>
+</section>
+<section id="importing-polyline-feature-data-in-shapefile-format" class="level3">
+<h3 class="anchored" data-anchor-id="importing-polyline-feature-data-in-shapefile-format">Importing Polyline feature data in Shapefile Format</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cyclingpath <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial"</span>, <span class="at">layer =</span> <span class="st">"CyclingPath"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `CyclingPath' from data source 
+  `/Users/jonathanley/Dropbox/SMU Modules/ISSS624 - Applied Geospatial Analytics/Quarto/jonathanley1986/ISSS624/Hands-on_Ex1/data/geospatial' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1625 features and 2 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: 12711.19 ymin: 28711.33 xmax: 42626.09 ymax: 48948.15
+Projected CRS: SVY21</code></pre>
+</div>
+</div>
+</section>
+<section id="importing-gis-feature-data-in-kml-format" class="level3">
+<h3 class="anchored" data-anchor-id="importing-gis-feature-data-in-kml-format">Importing GIS feature data in KML format</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>preschool <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">"data/geospatial/pre-schools-location-kml.kml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `PRESCHOOLS_LOCATION' from data source 
+  `/Users/jonathanley/Dropbox/SMU Modules/ISSS624 - Applied Geospatial Analytics/Quarto/jonathanley1986/ISSS624/Hands-on_Ex1/data/geospatial/pre-schools-location-kml.kml' 
+  using driver `KML'
+Simple feature collection with 1359 features and 2 fields
+Geometry type: POINT
+Dimension:     XYZ
+Bounding box:  xmin: 103.6824 ymin: 1.248403 xmax: 103.9897 ymax: 1.462134
+z_range:       zmin: 0 zmax: 0
+Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 
