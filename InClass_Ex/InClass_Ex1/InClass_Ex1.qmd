@@ -32,7 +32,7 @@ Importing and transforming projected coordinates system
 Note: For SG coordinates, you need to transform to CRS = 3414
 
 ```{r}
-preschool = st_read("data/geospatial/pre-schools-location-kml.kml") %%
+preschool = st_read("data/geospatial/pre-schools-location-kml.kml") %>%
   st_transform(crs = 3414)
 ```
 
