@@ -194,6 +194,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#plotting-by-geometry" id="toc-plotting-by-geometry" class="nav-link" data-scroll-target="#plotting-by-geometry">Plotting by Geometry</a></li>
   <li><a href="#plotting-by-specific-attribute" id="toc-plotting-by-specific-attribute" class="nav-link" data-scroll-target="#plotting-by-specific-attribute">Plotting by Specific Attribute</a></li>
   </ul></li>
+  <li><a href="#working-with-projection" id="toc-working-with-projection" class="nav-link" data-scroll-target="#working-with-projection">Working with Projection</a>
+  <ul class="collapse">
+  <li><a href="#assigning-epsg-code-to-a-simple-data-frame" id="toc-assigning-epsg-code-to-a-simple-data-frame" class="nav-link" data-scroll-target="#assigning-epsg-code-to-a-simple-data-frame">Assigning EPSG code to a simple data frame</a></li>
+  <li><a href="#transforming-projection-of-preschool-from-wgs84-to-svy21" id="toc-transforming-projection-of-preschool-from-wgs84-to-svy21" class="nav-link" data-scroll-target="#transforming-projection-of-preschool-from-wgs84-to-svy21">Transforming projection of preschool from wgs84 to svy21</a></li>
+  </ul></li>
+  <li><a href="#importing-and-converting-an-aspatial-data" id="toc-importing-and-converting-an-aspatial-data" class="nav-link" data-scroll-target="#importing-and-converting-an-aspatial-data">Importing and Converting an Aspatial Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-aspatial-data" id="toc-importing-aspatial-data" class="nav-link" data-scroll-target="#importing-aspatial-data">Importing Aspatial Data</a></li>
+  <li><a href="#creating-a-simple-feature-data-frame-from-aspatial-data-frame" id="toc-creating-a-simple-feature-data-frame-from-aspatial-data-frame" class="nav-link" data-scroll-target="#creating-a-simple-feature-data-frame-from-aspatial-data-frame">Creating a simple feature data frame from aspatial data frame</a></li>
+  </ul></li>
+  <li><a href="#geoprocessing-with-sf-package" id="toc-geoprocessing-with-sf-package" class="nav-link" data-scroll-target="#geoprocessing-with-sf-package">Geoprocessing with sf package</a>
+  <ul class="collapse">
+  <li><a href="#buffering" id="toc-buffering" class="nav-link" data-scroll-target="#buffering">Buffering</a></li>
+  <li><a href="#point-in-polygon-count" id="toc-point-in-polygon-count" class="nav-link" data-scroll-target="#point-in-polygon-count">Point in polygon count</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#plotting-in-histogram" id="toc-plotting-in-histogram" class="nav-link" data-scroll-target="#plotting-in-histogram">Plotting in Histogram</a></li>
+  <li><a href="#plotting-in-scatterplot" id="toc-plotting-in-scatterplot" class="nav-link" data-scroll-target="#plotting-in-scatterplot">Plotting in Scatterplot</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -398,6 +418,305 @@ all</code></pre>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mpsz[<span class="st">"PLN_AREA_N"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Hands-on_Ex1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="working-with-projection" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-projection">Working with Projection</h2>
+<section id="assigning-epsg-code-to-a-simple-data-frame" class="level3">
+<h3 class="anchored" data-anchor-id="assigning-epsg-code-to-a-simple-data-frame">Assigning EPSG code to a simple data frame</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: SVY21 
+  wkt:
+PROJCRS["SVY21",
+    BASEGEOGCRS["SVY21[WGS84]",
+        DATUM["World Geodetic System 1984",
+            ELLIPSOID["WGS 84",6378137,298.257223563,
+                LENGTHUNIT["metre",1]],
+            ID["EPSG",6326]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["unnamed",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",1.36666666666667,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",103.833333333333,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",28001.642,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",38744.572,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mpsz3414 <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(mpsz, <span class="dv">3414</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: st_crs&lt;- : replacing crs does not reproject data; use st_transform for
+that</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(mpsz3414)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:3414 
+  wkt:
+PROJCRS["SVY21 / Singapore TM",
+    BASEGEOGCRS["SVY21",
+        DATUM["SVY21",
+            ELLIPSOID["WGS 84",6378137,298.257223563,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4757]],
+    CONVERSION["Singapore Transverse Mercator",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",1.36666666666667,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",103.833333333333,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",28001.642,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",38744.572,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["northing (N)",north,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["easting (E)",east,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Cadastre, engineering survey, topographic mapping."],
+        AREA["Singapore - onshore and offshore."],
+        BBOX[1.13,103.59,1.47,104.07]],
+    ID["EPSG",3414]]</code></pre>
+</div>
+</div>
+</section>
+<section id="transforming-projection-of-preschool-from-wgs84-to-svy21" class="level3">
+<h3 class="anchored" data-anchor-id="transforming-projection-of-preschool-from-wgs84-to-svy21">Transforming projection of preschool from wgs84 to svy21</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>preschool3414 <span class="ot">&lt;-</span> <span class="fu">st_transform</span> (preschool, <span class="at">crs =</span> <span class="dv">3414</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>preschool3414</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 1359 features and 2 fields
+Geometry type: POINT
+Dimension:     XYZ
+Bounding box:  xmin: 11203.01 ymin: 25667.6 xmax: 45404.24 ymax: 49300.88
+z_range:       zmin: 0 zmax: 0
+Projected CRS: SVY21 / Singapore TM
+First 10 features:
+     Name
+1   kml_1
+2   kml_2
+3   kml_3
+4   kml_4
+5   kml_5
+6   kml_6
+7   kml_7
+8   kml_8
+9   kml_9
+10 kml_10
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Description
+1                                                          &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;BIG FOOT PRE SCHOOL LLP&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT9281&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;196, WEST COAST ROAD, SINGAPORE 127375&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;127375&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;838CD358794FD031&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+2                      &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;POSSO PRESCHOOL @ WEST COAST RISE PTE LTD&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT8684&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;30, WEST COAST RISE, HONG LEONG GARDEN, SINGAPORE 127473&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;127473&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;F331CEB175F9C254&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+3                                                         &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;GENESIS CHILD CARE PTE. LTD.&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT9132&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;2A, JUBILEE ROAD, SINGAPORE 128524&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;128524&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;4C2E7E55019A633F&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+4                                                 &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;LITTLE FOOTPRINTS PRESCHOOL PTE. LTD.&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT9260&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;6, JUBILEE ROAD, SINGAPORE 128531&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;128531&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;DDF98422A198387B&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+5                                &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;AMAR KIDZ @ WEST COAST LLP&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT9016&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;8, JALAN LEMPENG, #02 - 03, PARK WEST CONDO, SINGAPORE 128796&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;128796&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;EAB3263D23F126AF&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+6                                            &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;TCC PRESCHOOL FABER PTE LTD&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT9299&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;60, FABER TERRACE, FABER HILLS, SINGAPORE 129040&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;129040&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;195E3739B77E6A5F&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+7                      &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;ACEKIDZ @ COMMUNITY&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;PT5950&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;2, CLEMENTI WEST ST 2, #03 - 06, WEST COAST COMMUNITY CENTRE, SINGAPORE 129605&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;129605&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;9B1070EE1CB4A3E2&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+8                   &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;PCF SPARKLETOTS PRESCHOOL @ QUEENSTOWN BLK 145 (CC)&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;ST0092&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;145, MEI LING STREET, #01 - 137, SINGAPORE 140145&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;140145&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;820E90716985CCCA&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+9  &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;PCF SPARKLETOTS PRESCHOOL @ QUEENSTOWN BLK 53A (CC)&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;ST0176&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;53A, STRATHMORE AVENUE, #01 - 01, FORFAR HEIGHTS, SINGAPORE 143053&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;143053&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;A7DC7D2C961A8822&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+10                                                     &lt;center&gt;&lt;table&gt;&lt;tr&gt;&lt;th colspan='2' align='center'&gt;&lt;em&gt;Attributes&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;CENTRE_NAME&lt;/th&gt; &lt;td&gt;MY FIRST SKOOL&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;CENTRE_CODE&lt;/th&gt; &lt;td&gt;NT0510&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;ADDRESS&lt;/th&gt; &lt;td&gt;106, HENDERSON CRESCENT, #01 - 37, SINGAPORE 150106&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;POSTAL_CODE&lt;/th&gt; &lt;td&gt;150106&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor="#E3E3F3"&gt; &lt;th&gt;INC_CRC&lt;/th&gt; &lt;td&gt;EB3942B460BB5CBC&lt;/td&gt; &lt;/tr&gt;&lt;tr bgcolor=""&gt; &lt;th&gt;FMEL_UPD_D&lt;/th&gt; &lt;td&gt;20171208174048&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;
+                        geometry
+1  POINT Z (19997.26 32333.17 0)
+2  POINT Z (19126.75 33114.35 0)
+3  POINT Z (20345.12 31934.56 0)
+4  POINT Z (20400.31 31952.36 0)
+5  POINT Z (19810.78 33140.31 0)
+6  POINT Z (19550.92 33770.18 0)
+7  POINT Z (20378.07 31665.55 0)
+8  POINT Z (24835.77 30689.38 0)
+9   POINT Z (25139.3 30636.01 0)
+10 POINT Z (26771.14 30203.71 0)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="importing-and-converting-an-aspatial-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-and-converting-an-aspatial-data">Importing and Converting an Aspatial Data</h2>
+<section id="importing-aspatial-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-aspatial-data">Importing Aspatial Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>listings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/listings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4252 Columns: 16
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr   (5): name, host_name, neighbourhood_group, neighbourhood, room_type
+dbl  (10): id, host_id, latitude, longitude, price, minimum_nights, number_o...
+date  (1): last_review
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(listings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+# A tibble: 4,252 × 16
+       id name     host_id host_…¹ neigh…² neigh…³ latit…⁴ longi…⁵ room_…⁶ price
+    &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1  50646 Pleasan…  227796 Sujatha Centra… Bukit …    1.33    104. Privat…    80
+ 2  71609 Ensuite…  367042 Belinda East R… Tampin…    1.35    104. Privat…   178
+ 3  71896 B&amp;B  Ro…  367042 Belinda East R… Tampin…    1.35    104. Privat…    81
+ 4  71903 Room 2-…  367042 Belinda East R… Tampin…    1.35    104. Privat…    81
+ 5 275343 Conveni… 1439258 Joyce   Centra… Bukit …    1.29    104. Privat…    52
+ 6 275344 15 mins… 1439258 Joyce   Centra… Bukit …    1.29    104. Privat…    40
+ 7 294281 5 mins … 1521514 Elizab… Centra… Newton     1.31    104. Privat…    72
+ 8 301247 Nice ro… 1552002 Rahul   Centra… Geylang    1.32    104. Privat…    41
+ 9 324945 20 Mins… 1439258 Joyce   Centra… Bukit …    1.29    104. Privat…    49
+10 330089 Accomo@… 1439258 Joyce   Centra… Bukit …    1.29    104. Privat…    49
+# … with 4,242 more rows, 6 more variables: minimum_nights &lt;dbl&gt;,
+#   number_of_reviews &lt;dbl&gt;, last_review &lt;date&gt;, reviews_per_month &lt;dbl&gt;,
+#   calculated_host_listings_count &lt;dbl&gt;, availability_365 &lt;dbl&gt;, and
+#   abbreviated variable names ¹​host_name, ²​neighbourhood_group,
+#   ³​neighbourhood, ⁴​latitude, ⁵​longitude, ⁶​room_type</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-a-simple-feature-data-frame-from-aspatial-data-frame" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-simple-feature-data-frame-from-aspatial-data-frame">Creating a simple feature data frame from aspatial data frame</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>listings_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(listings, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs=</span><span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3414</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(listings_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 4,252
+Columns: 15
+$ id                             &lt;dbl&gt; 50646, 71609, 71896, 71903, 275343, 275…
+$ name                           &lt;chr&gt; "Pleasant Room along Bukit Timah", "Ens…
+$ host_id                        &lt;dbl&gt; 227796, 367042, 367042, 367042, 1439258…
+$ host_name                      &lt;chr&gt; "Sujatha", "Belinda", "Belinda", "Belin…
+$ neighbourhood_group            &lt;chr&gt; "Central Region", "East Region", "East …
+$ neighbourhood                  &lt;chr&gt; "Bukit Timah", "Tampines", "Tampines", …
+$ room_type                      &lt;chr&gt; "Private room", "Private room", "Privat…
+$ price                          &lt;dbl&gt; 80, 178, 81, 81, 52, 40, 72, 41, 49, 49…
+$ minimum_nights                 &lt;dbl&gt; 90, 90, 90, 90, 14, 14, 90, 8, 14, 14, …
+$ number_of_reviews              &lt;dbl&gt; 18, 20, 24, 48, 20, 13, 133, 105, 14, 1…
+$ last_review                    &lt;date&gt; 2014-07-08, 2019-12-28, 2014-12-10, 20…
+$ reviews_per_month              &lt;dbl&gt; 0.22, 0.28, 0.33, 0.67, 0.20, 0.16, 1.2…
+$ calculated_host_listings_count &lt;dbl&gt; 1, 4, 4, 4, 50, 50, 7, 1, 50, 50, 50, 4…
+$ availability_365               &lt;dbl&gt; 365, 365, 365, 365, 353, 364, 365, 90, …
+$ geometry                       &lt;POINT [m]&gt; POINT (22646.02 35167.9), POINT (…</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="geoprocessing-with-sf-package" class="level2">
+<h2 class="anchored" data-anchor-id="geoprocessing-with-sf-package">Geoprocessing with sf package</h2>
+<section id="buffering" class="level3">
+<h3 class="anchored" data-anchor-id="buffering">Buffering</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>buffer_cycling <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(cyclingpath, <span class="at">dist=</span><span class="dv">5</span>, <span class="at">nQuadSegs =</span> <span class="dv">30</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>buffer_cycling<span class="sc">$</span>AREA <span class="ot">&lt;-</span> <span class="fu">st_area</span>(buffer_cycling)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(buffer_cycling<span class="sc">$</span>AREA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>773143.9 [m^2]</code></pre>
+</div>
+</div>
+</section>
+<section id="point-in-polygon-count" class="level3">
+<h3 class="anchored" data-anchor-id="point-in-polygon-count">Point in polygon count</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span><span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">st_intersects</span>(mpsz3414, preschool3414)) </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   4.207   6.000  37.000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">top_n</span>(mpsz3414, <span class="dv">1</span>, <span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 1 feature and 16 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 23449.05 ymin: 46001.23 xmax: 25594.22 ymax: 47996.47
+Projected CRS: SVY21 / Singapore TM
+  OBJECTID SUBZONE_NO      SUBZONE_N SUBZONE_C CA_IND PLN_AREA_N PLN_AREA_C
+1      290          3 WOODLANDS EAST    WDSZ03      N  WOODLANDS         WD
+      REGION_N REGION_C          INC_CRC FMEL_UPD_D   X_ADDR   Y_ADDR
+1 NORTH REGION       NR C90769E43EE6B0F2 2014-12-05 24506.64 46991.63
+  SHAPE_Leng SHAPE_Area                       geometry PreSch Count
+1   6603.608    2553464 MULTIPOLYGON (((24786.75 46...           37</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mpsz3414<span class="sc">$</span>Area <span class="ot">&lt;-</span> mpsz3414 <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_area</span>()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>mpsz3414 <span class="ot">&lt;-</span> mpsz3414 <span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span><span class="sc">/</span>Area <span class="sc">*</span> <span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="exploratory-data-analysis-eda" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+<section id="plotting-in-histogram" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-in-histogram">Plotting in Histogram</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Hands-on_Ex1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mpsz3414, </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> <span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>)))<span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>, </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color=</span><span class="st">"black"</span>, </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill=</span><span class="st">"light blue"</span>) <span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Are pre-school evenly distributed in Singapore?"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"There are many planning sub-zones with a single pre-school, on the other hand, </span><span class="sc">\n</span><span class="st">there are two planning sub-zones with at least 20 pre-schools"</span>,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Pre-school density (per km sq)"</span>,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Hands-on_Ex1_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="plotting-in-scatterplot" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-in-scatterplot">Plotting in Scatterplot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpsz3414, <span class="fu">aes</span>(<span class="at">x=</span> <span class="st">'PreSch Density (per km sq)'</span>, <span class="at">y =</span> <span class="st">'PreSch Count'</span>)) <span class="sc">+</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Hands-on_Ex1_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
