@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "InClass_Ex/InClass_Ex1/InClass_Ex1.html",
+    "href": "InClass_Ex/InClass_Ex1/InClass_Ex1.html",
+    "title": "In-class Exercise 1",
+    "section": "",
+    "text": "This is xxx\nGetting Started (Load Code)\nThe code chunk below will install and load tidyverse and sf packages.\nNote: Specify package name in the code chunk if it is not loaded in the library.\n\npacman::p_load(sf, tidyverse)\n\nImporting Geospatial Data\nImporting polygon features\nThis code chunk below will import ESRI stepfile into R.\n\nmpsz <- st_read(dsn = \"data/geospatial\", layer = \"MP14_SUBZONE_WEB_PL\")\n\nReading layer `MP14_SUBZONE_WEB_PL' from data source \n  `/Users/jonathanley/Dropbox/SMU Modules/ISSS624 - Applied Geospatial Analytics/Quarto/jonathanley1986/ISSS624/InClass_Ex/InClass_Ex1/data/geospatial' \n  using driver `ESRI Shapefile'\nSimple feature collection with 323 features and 15 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33\nProjected CRS: SVY21"
+  },
+  {
     "objectID": "Hands-on_Ex1/Hands-on_Ex1.html",
     "href": "Hands-on_Ex1/Hands-on_Ex1.html",
     "title": "Hands-on Exercise 1: Geospatial Data Wrangling with R",
