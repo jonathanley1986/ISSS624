@@ -14,7 +14,7 @@ The code chunk below will install and load tidyverse and sf packages.
 Note: Specify package name in the code chunk if it is not loaded in the library.
 
 ```{r}
-pacman::p_load(sf, tidyverse)
+pacman::p_load(sf, tidyverse, spdep)
 ```
 
 Importing Geospatial Data
@@ -29,7 +29,18 @@ mpsz <- st_read(dsn = "data/geospatial", layer = "MP14_SUBZONE_WEB_PL")
 
 Importing and transforming projected coordinates system
 
+Note: For SG coordinates, you need to transform to CRS = 3414
+
 ```{r}
 preschool = st_read("data/geospatial/pre-schools-location-kml.kml") %%
   st_transform(crs = 3414)
+```
+
+```{r}
+hunan <- st_read(dsn = "data/geospatial", layer = "Hunan")
+```
+
+```{r}
+hunan <- read_csv("data/aspatial/Hunan_2012.csv")
+
 ```
