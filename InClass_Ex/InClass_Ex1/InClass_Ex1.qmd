@@ -67,7 +67,6 @@ hunan1 <- left_join(hunan, hunan2012)
 ## Visualizing Regional Development Indicator
 
 ```{r}
-
 basemap <- tm_shape(hunan1) +
   tm_polygons() +
   tm_text("NAME_3", size=0.3) +
