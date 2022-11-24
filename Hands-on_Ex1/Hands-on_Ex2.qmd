@@ -2,3 +2,7 @@
 title: "Hands-on_Ex2"
 editor: visual
 ---
+
+## Global and Local Measures of Spatial Autocorrelation
+
+We will learn how to compute Global and Local Measure of Spatial Autocorrelation (GLSA) by using **spdep** package.
