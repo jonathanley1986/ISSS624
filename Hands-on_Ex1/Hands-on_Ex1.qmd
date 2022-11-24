@@ -263,7 +263,7 @@ qtm(mpsz_pop2020,
     fill = "DEPENDENCY")
 ```
 
-### Creating a choropleth map by using *tmap*\'s elements
+### Creating a choropleth map by using *tmap*'s elements
 
 ```{r}
 tm_shape(mpsz_pop2020)+
@@ -310,7 +310,7 @@ tm_shape(mpsz_pop2020)+
   tm_borders(lwd = 0.1,  alpha = 1)
 ```
 
-### Plotting choropleth maps with built-in classification methods 
+### Plotting choropleth maps with built-in classification methods
 
 ```{r}
 tm_shape(mpsz_pop2020)+
