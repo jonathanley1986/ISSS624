@@ -6,3 +6,89 @@ editor: visual
 ## Global and Local Measures of Spatial Autocorrelation
 
 We will learn how to compute Global and Local Measure of Spatial Autocorrelation (GLSA) by using **spdep** package.
+
+## Getting Started
+
+### The Analytical Question
+
+Our task in this study, hence, is to apply appropriate spatial statistical methods to discover if development are even distributed geographically.
+
+In this case study, we are interested to examine the spatial pattern of a selected development indicator (i.e. GDP per capita) of Hunan Provice, People Republic of China.
+
+### The Study Area and Data
+
+2 datasets will be used in this hands-on exercise:
+
+1.  Hunan province administrative boundary layer at county level. This is a geospatial data set in ESRI shapefile format.
+2.  Hunan_2012.csv: This csv file contains selected Hunan\'s local development indicators in 2012.
+
+### Setting the Analytical Tools
+
+The code chunk below is used to perform the following tasks:
+
+1.  Creating a package list containing the necessary R packages,
+2.  Checking if the R packages in the package list have been installed in R,
+    -   If they have yet to be installed, RStudio will installed the missing packages,
+3.  Launching the packages into R environment.
+
+```{r}
+pacman::p_load(sf, spdep, tmap, tidyverse)
+```
+
+## Getting the Data Into R Environment
+
+We will learn how to bring a geospatial data and its associated attribute table into R environment.
+
+### Import shapefile into r environment
+
+The code chunk below uses [*st_read()*](https://r-spatial.github.io/sf/reference/st_read.html) of **sf** package to import Hunan shapefile into R. The imported shapefile will be **simple features** Object of **sf**.
+
+```{r}
+hunan <- st_read(dsn = "data/geospatial", 
+                 layer = "Hunan")
+```
+
+### Import csv file into r environment
+
+Next, we will import *Hunan_2012.csv* into R by using *read_csv()* of **readr** package.
+
+```{r}
+hunan2012 <- read_csv("data/aspatial/Hunan_2012.csv",show_col_types = FALSE)
+```
+
+### Performing relational join
+
+The code chunk below will be used to update the attribute table of *hunan*\'s SpatialPolygonsDataFrame with the attribute fields of *hunan2012* dataframe.
+
+```{r}
+hunan <- left_join(hunan,hunan2012)
+```
+
+### Visualising Regional Development Indicator
+
+We are going to prepare a basemap and a choropleth map showing the distribution of GDPPC 2012 by using *qtm()* of **tmap** package.
+
+```{r}
+equal <- tm_shape(hunan) +
+  tm_fill("GDPPC",
+          n = 5,
+          style = "equal") +
+  tm_borders(alpha = 0.5) +
+  tm_layout(main.title = "Equal interval classification")
+
+quantile <- tm_shape(hunan) +
+  tm_fill("GDPPC",
+          n = 5,
+          style = "quantile") +
+  tm_borders(alpha = 0.5) +
+  tm_layout(main.title = "Equal quantile classification")
+
+tmap_arrange(equal, 
+             quantile, 
+             asp=1, 
+             ncol=2)
+```
+
+## Global Spatial Autocorrelation
+
+We will learn how to compute global spatial autocorrelation statistics and to perform spatial complete randomness test for global spatial autocorrelation.
