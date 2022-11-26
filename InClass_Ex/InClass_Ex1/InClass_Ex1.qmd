@@ -14,7 +14,7 @@ The code chunk below will install and load tidyverse and sf packages.
 Note: Specify package name in the code chunk if it is not loaded in the library.
 
 ```{r}
-pacman::p_load(sf, tidyverse, spdep)
+pacman::p_load(sf, tidyverse, spdep, tmap)
 ```
 
 ### Importing Geospatial Data
