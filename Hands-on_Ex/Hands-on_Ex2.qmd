@@ -20,7 +20,7 @@ In this case study, we are interested to examine the spatial pattern of a select
 2 datasets will be used in this hands-on exercise:
 
 1.  Hunan province administrative boundary layer at county level. This is a geospatial data set in ESRI shapefile format.
-2.  Hunan_2012.csv: This csv file contains selected Hunan\'s local development indicators in 2012.
+2.  Hunan_2012.csv: This csv file contains selected Hunan's local development indicators in 2012.
 
 ### Setting the Analytical Tools
 
@@ -58,7 +58,7 @@ hunan2012 <- read_csv("data/aspatial/Hunan_2012.csv",show_col_types = FALSE)
 
 ### Performing relational join
 
-The code chunk below will be used to update the attribute table of *hunan*\'s SpatialPolygonsDataFrame with the attribute fields of *hunan2012* dataframe.
+The code chunk below will be used to update the attribute table of *hunan*'s SpatialPolygonsDataFrame with the attribute fields of *hunan2012* dataframe.
 
 ```{r}
 hunan <- left_join(hunan,hunan2012)
@@ -109,7 +109,7 @@ summary(wm_q)
 
 ### Row-standardised weights matrix
 
-We need to assign weights to each neighboring polygon. In our case, each neighboring polygon will be assigned equal weight (style=\"W\").
+We need to assign weights to each neighboring polygon. In our case, each neighboring polygon will be assigned equal weight (style="W").
 
 ```{r}
 rswm_q <- nb2listw(wm_q, 
@@ -118,13 +118,13 @@ rswm_q <- nb2listw(wm_q,
 rswm_q
 ```
 
-### Global Spatial Autocorrelation: Moran\'s I
+### Global Spatial Autocorrelation: Moran's I
 
-We will learn how to perform Moran\'s I statistics testing by using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
+We will learn how to perform Moran's I statistics testing by using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
 
-### Maron\'s I test
+### Maron's I test
 
-The code chunk below performs Moran\'s I statistical testing using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
+The code chunk below performs Moran's I statistical testing using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
 
 ```{r}
 moran.test(hunan2012$GDPPC, 
@@ -133,9 +133,9 @@ moran.test(hunan2012$GDPPC,
            na.action=na.omit)
 ```
 
-#### Computing Monte Carlo Moran\'s I
+#### Computing Monte Carlo Moran's I
 
-The code chunk below performs permutation test for Moran\'s I statistic by using [*moran.mc()*](https://r-spatial.github.io/spdep/reference/moran.mc.html) of **spdep**. A total of 1000 simulation will be performed.
+The code chunk below performs permutation test for Moran's I statistic by using [*moran.mc()*](https://r-spatial.github.io/spdep/reference/moran.mc.html) of **spdep**. A total of 1000 simulation will be performed.
 
 ```{r}
 set.seed(1234)
@@ -147,7 +147,7 @@ bperm= moran.mc(hunan2012$GDPPC,
 bperm
 ```
 
-#### Visualising Monte Carlo Moran\'s I
+#### Visualising Monte Carlo Moran's I
 
 We will plot the distribution of the statistical values as a histogram by using the code chunk below.
 
@@ -174,19 +174,19 @@ abline(v=0,
        col="red") 
 ```
 
-### Global Spatial Autocorrelation: Geary\'s
+### Global Spatial Autocorrelation: Geary's
 
-We will learn how to perform Geary\'s c statistics testing by using appropriate functions of **spdep** package.
+We will learn how to perform Geary's c statistics testing by using appropriate functions of **spdep** package.
 
-The code chunk below performs Geary\'s C test for spatial autocorrelation by using [*geary.test()*](https://r-spatial.github.io/spdep/reference/geary.test.html) of **spdep**.
+The code chunk below performs Geary's C test for spatial autocorrelation by using [*geary.test()*](https://r-spatial.github.io/spdep/reference/geary.test.html) of **spdep**.
 
 ```{r}
 geary.test(hunan2012$GDPPC, listw=rswm_q)
 ```
 
-#### Computing Monte Carlo Geary\'s C
+#### Computing Monte Carlo Geary's C
 
-The code chunk below performs permutation test for Geary\'s C statistic by using [*geary.mc()*](https://r-spatial.github.io/spdep/reference/geary.mc.html) of **spdep**.
+The code chunk below performs permutation test for Geary's C statistic by using [*geary.mc()*](https://r-spatial.github.io/spdep/reference/geary.mc.html) of **spdep**.
 
 ```{r}
 set.seed(1234)
@@ -196,7 +196,7 @@ bperm=geary.mc(hunan2012$GDPPC,
 bperm
 ```
 
-#### Visualising the Monte Carlo Geary\'s C
+#### Visualising the Monte Carlo Geary's C
 
 We will plot a histogram to reveal the distribution of the simulated values by using the code chunk below.
 
@@ -219,13 +219,13 @@ abline(v=1, col="red")
 
 ## Spatial Correlogram
 
-They show how correlated are pairs of spatial observations when you increase the distance (lag) between them - they are plots of some index of autocorrelation (Moran\'s I or Geary\'s c) against distance.
+They show how correlated are pairs of spatial observations when you increase the distance (lag) between them - they are plots of some index of autocorrelation (Moran's I or Geary's c) against distance.
 
 They are very useful as an exploratory and descriptive tool. For this purpose they actually provide richer information than variograms.
 
-### Compute Moran\'s I correlogram
+### Compute Moran's I correlogram
 
-In the code chunk below, [*sp.correlogram()*](https://r-spatial.github.io/spdep/reference/sp.correlogram.html) of **spdep** package is used to compute a 6-lag spatial correlogram of GDPPC. The global spatial autocorrelation used in Moran\'s I. The **plot()** of base Graph is then used to plot the output.
+In the code chunk below, [*sp.correlogram()*](https://r-spatial.github.io/spdep/reference/sp.correlogram.html) of **spdep** package is used to compute a 6-lag spatial correlogram of GDPPC. The global spatial autocorrelation used in Moran's I. The **plot()** of base Graph is then used to plot the output.
 
 ```{r}
 MI_corr <- sp.correlogram(wm_q, 
@@ -238,9 +238,9 @@ plot(MI_corr)
 print(MI_corr)
 ```
 
-### Compute Geary\'s C correlogram and plot
+### Compute Geary's C correlogram and plot
 
-In the code chunk below, *sp.correlogram()* of **spdep** package is used to compute a 6-lag spatial correlogram of GDPPC. The global spatial autocorrelation used in Geary\'s C. The **plot()** of base Graph is then used to plot the output.
+In the code chunk below, *sp.correlogram()* of **spdep** package is used to compute a 6-lag spatial correlogram of GDPPC. The global spatial autocorrelation used in Geary's C. The **plot()** of base Graph is then used to plot the output.
 
 ```{r}
 GC_corr <- sp.correlogram(wm_q, 
@@ -255,13 +255,13 @@ print(GC_corr)
 
 ## Cluster and Outlier Analysis
 
-We will learn how to apply appropriate Local Indicators for Spatial Association (LISA), especially local Moran\'I to detect cluster and/or outlier from GDP per capita 2012 of Hunan Province, PRC.
+We will learn how to apply appropriate Local Indicators for Spatial Association (LISA), especially local Moran'I to detect cluster and/or outlier from GDP per capita 2012 of Hunan Province, PRC.
 
-### Computing local Moran\'s I
+### Computing local Moran's I
 
-To compute local Moran\'s I, the [*localmoran()*](https://r-spatial.github.io/spdep/reference/localmoran.html) function of **spdep** will be used. It computes *Ii* values, given a set of *zi* values and a listw object providing neighbour weighting information for the polygon associated with the zi values.
+To compute local Moran's I, the [*localmoran()*](https://r-spatial.github.io/spdep/reference/localmoran.html) function of **spdep** will be used. It computes *Ii* values, given a set of *zi* values and a listw object providing neighbour weighting information for the polygon associated with the zi values.
 
-The code chunks below are used to compute local Moran\'s I of *GDPPC2012* at the county level.
+The code chunks below are used to compute local Moran's I of *GDPPC2012* at the county level.
 
 ```{r}
 fips <- order(hunan$County)
@@ -275,7 +275,7 @@ The code chunk below list the content of the local Moran matrix derived by using
 printCoefmat(data.frame(localMI[fips,], row.names=hunan2012$County[fips]), check.names=FALSE)
 ```
 
-#### Mapping the local Moran\'s I
+#### Mapping the local Moran's I
 
 The code chunks below can be used to perform the task. The out SpatialPolygonDataFrame is called *hunan.localMI*.
 
@@ -284,7 +284,7 @@ hunan.localMI <- cbind(hunan,localMI) %>%
   rename(Pr.Ii = Pr.z....E.Ii..)
 ```
 
-#### Mapping local Moran\'s I values
+#### Mapping local Moran's I values
 
 ```{r}
 tm_shape(hunan.localMI) +
@@ -295,9 +295,9 @@ tm_shape(hunan.localMI) +
   tm_borders(alpha = 0.5)
 ```
 
-#### Mapping local Moran\'s I p-values
+#### Mapping local Moran's I p-values
 
-The code chunks below produce a choropleth map of Moran\'s I p-values by using functions of **tmap** package.
+The code chunks below produce a choropleth map of Moran's I p-values by using functions of **tmap** package.
 
 ```{r}
 tm_shape(hunan.localMI) +
@@ -308,7 +308,7 @@ tm_shape(hunan.localMI) +
   tm_borders(alpha = 0.5)
 ```
 
-#### Mapping both local Moran\'s I values and p-values
+#### Mapping both local Moran's I values and p-values
 
 The code chunk below will be used to create such visualisation.
 
@@ -377,7 +377,7 @@ We centers the variable of interest around its mean.
 DV <- hunan2012$GDPPC - mean(hunan2012$GDPPC)     
 ```
 
-Next, we center the local Moran\'s around the mean.
+Next, we center the local Moran's around the mean.
 
 ```{r}
 C_mI <- localMI[,1] - mean(localMI[,1])    
@@ -393,8 +393,8 @@ These four command lines define the high-high, low-low, low-high and high-low ca
 
 ```{r}
 quadrant[DV >0 & C_mI>0] <- 4      
-quadrant[DV <0 & C_mI<0] <- 1      
-quadrant[DV <0 & C_mI>0] <- 2
+quadrant[DV <0 & C_mI<0] <- 2      
+quadrant[DV <0 & C_mI>0] <- 1
 quadrant[DV >0 & C_mI<0] <- 3
 ```
 
@@ -412,8 +412,8 @@ DV <- hunan2012$GDPPC - mean(hunan2012$GDPPC)
 C_mI <- localMI[,1] - mean(localMI[,1])    
 signif <- 0.05       
 quadrant[DV >0 & C_mI>0] <- 4      
-quadrant[DV <0 & C_mI<0] <- 1      
-quadrant[DV <0 & C_mI>0] <- 2
+quadrant[DV <0 & C_mI<0] <- 2      
+quadrant[DV <0 & C_mI>0] <- 1
 quadrant[DV >0 & C_mI<0] <- 3
 quadrant[localMI[,5]>signif] <- 0
 ```
@@ -437,7 +437,7 @@ tm_shape(hunan.localMI) +
   tm_borders(alpha=0.5)
 ```
 
-For effective interpretation, it is better to plot both the local Moran\'s I values map and its corresponding p-values map next to each other.
+For effective interpretation, it is better to plot both the local Moran's I values map and its corresponding p-values map next to each other.
 
 The code chunk below will be used to create such visualisation.
 
@@ -462,7 +462,7 @@ tmap_arrange(gdppc, LISAmap, asp=1, ncol=2)
 
 ## Hot Spot and Cold Spot Area Analysis
 
-### Getis and Ord\'s G-Statistics
+### Getis and Ord's G-Statistics
 
 The analysis consists of three steps:
 
