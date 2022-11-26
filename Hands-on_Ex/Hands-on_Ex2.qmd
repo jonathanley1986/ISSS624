@@ -127,7 +127,7 @@ We will learn how to perform Moran's I statistics testing by using [*moran.test(
 The code chunk below performs Moran's I statistical testing using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
 
 ```{r}
-moran.test(hunan2012$GDPPC, 
+moran.test(hunan$GDPPC, 
            listw = rswm_q, 
            zero.policy = TRUE, 
            na.action=na.omit)
@@ -181,7 +181,7 @@ We will learn how to perform Geary's c statistics testing by using appropriate f
 The code chunk below performs Geary's C test for spatial autocorrelation by using [*geary.test()*](https://r-spatial.github.io/spdep/reference/geary.test.html) of **spdep**.
 
 ```{r}
-geary.test(hunan2012$GDPPC, listw=rswm_q)
+geary.test(hunan$GDPPC, listw=rswm_q)
 ```
 
 #### Computing Monte Carlo Geary's C
@@ -190,7 +190,7 @@ The code chunk below performs permutation test for Geary's C statistic by using 
 
 ```{r}
 set.seed(1234)
-bperm=geary.mc(hunan2012$GDPPC, 
+bperm=geary.mc(hunan$GDPPC, 
                listw=rswm_q, 
                nsim=999)
 bperm
@@ -229,7 +229,7 @@ In the code chunk below, [*sp.correlogram()*](https://r-spatial.github.io/spdep/
 
 ```{r}
 MI_corr <- sp.correlogram(wm_q, 
-                          hunan2012$GDPPC, 
+                          hunan$GDPPC, 
                           order=6, 
                           method="I", 
                           style="W")
@@ -244,7 +244,7 @@ In the code chunk below, *sp.correlogram()* of **spdep** package is used to comp
 
 ```{r}
 GC_corr <- sp.correlogram(wm_q, 
-                          hunan2012$GDPPC, 
+                          hunan$GDPPC, 
                           order=6, 
                           method="C", 
                           style="W")
@@ -265,14 +265,14 @@ The code chunks below are used to compute local Moran's I of *GDPPC2012* at the 
 
 ```{r}
 fips <- order(hunan$County)
-localMI <- localmoran(hunan2012$GDPPC, rswm_q)
+localMI <- localmoran(hunan$GDPPC, rswm_q)
 head(localMI)
 ```
 
 The code chunk below list the content of the local Moran matrix derived by using [*printCoefmat()*](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/printCoefmat).
 
 ```{r}
-printCoefmat(data.frame(localMI[fips,], row.names=hunan2012$County[fips]), check.names=FALSE)
+printCoefmat(data.frame(localMI[fips,], row.names=hunan$County[fips]), check.names=FALSE)
 ```
 
 #### Mapping the local Moran's I
@@ -338,7 +338,7 @@ The first step before we can generate the LISA cluster map is to plot the Moran 
 The code chunk below plots the Moran scatterplot of GDPPC 2012 by using [*moran.plot()*](https://r-spatial.github.io/spdep/reference/moran.plot.html) of **spdep**.
 
 ```{r}
-nci <- moran.plot(hunan2012$GDPPC, rswm_q,
+nci <- moran.plot(hunan$GDPPC, rswm_q,
                   labels=as.character(hunan$County), 
                   xlab="GDPPC 2012", 
                   ylab="Spatially Lag GDPPC 2012")
@@ -349,7 +349,7 @@ nci <- moran.plot(hunan2012$GDPPC, rswm_q,
 We will use [*scale()*](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/scale) to centers and scales the variable. Here centering is done by subtracting the mean (omitting NAs) the corresponding columns, and scaling is done by dividing the (centered) variable by their standard deviations.
 
 ```{r}
-hunan$Z.GDPPC <- scale(hunan2012$GDPPC) %>% as.vector 
+hunan$Z.GDPPC <- scale(hunan$GDPPC) %>% as.vector 
 ```
 
 The [*as.vector()*](https://www.rdocumentation.org/packages/pbdDMAT/versions/0.5-1/topics/as.vector) added to the end is to make sure that the data type we get out of this is a vector, that map neatly into out dataframe.
@@ -374,7 +374,7 @@ quadrant <- vector(mode="numeric",length=nrow(localMI))
 We centers the variable of interest around its mean.
 
 ```{r}
-DV <- hunan2012$GDPPC - mean(hunan2012$GDPPC)     
+DV <- hunan$GDPPC - mean(hunan$GDPPC)     
 ```
 
 Next, we center the local Moran's around the mean.
@@ -408,7 +408,7 @@ We can combined all the steps into one single code chunk as shown below:
 
 ```{r}
 quadrant <- vector(mode="numeric",length=nrow(localMI))
-DV <- hunan2012$GDPPC - mean(hunan2012$GDPPC)     
+DV <- hunan$GDPPC - mean(hunan$GDPPC)     
 C_mI <- localMI[,1] - mean(localMI[,1])    
 signif <- 0.05       
 quadrant[DV >0 & C_mI>0] <- 4      
@@ -560,8 +560,8 @@ summary(knn_lw)
 ### Gi statistics using fixed distance
 
 ```{r}
-fips <- order(hunan2012$County)
-gi.fixed <- localG(hunan2012$GDPPC, wm62_lw)
+fips <- order(hunan$County)
+gi.fixed <- localG(hunan$GDPPC, wm62_lw)
 gi.fixed
 ```
 
@@ -596,8 +596,8 @@ tmap_arrange(gdppc, Gimap, asp=1, ncol=2)
 The code chunk below are used to compute the Gi values for GDPPC2012 by using an adaptive distance weight matrix (i.e *knb_lw*).
 
 ```{r}
-fips <- order(hunan2012$County)
-gi.adaptive <- localG(hunan2012$GDPPC, knn_lw)
+fips <- order(hunan$County)
+gi.adaptive <- localG(hunan$GDPPC, knn_lw)
 hunan.gi <- cbind(hunan, as.matrix(gi.adaptive)) %>%
   rename(gstat_adaptive = as.matrix.gi.adaptive.)
 ```
