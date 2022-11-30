@@ -1,0 +1,54 @@
+---
+title: "In-Class Exercise 2"
+author: Jonathan Ley
+execute: 
+  eval: false
+  massage: false
+editor: visual
+---
+
+## Overview
+
+## Getting Started
+
+```{r}
+pacman::p_load(sf, spdep, tmap, tidyverse, funModeling)
+```
+
+# Importing Geospatial Data
+
+In this in-class data, 2 gesptial data ses will be used, they are:
+
+1.  geo_export
+2.  nga_abb
+
+```{r}
+#| eval: false 
+wp <- st_read(dsn = "geodata",
+              layer = "geo_export",
+              crs = 4326) %>%
+  filter(clean_coun == "Nigeria")
+
+wp_nga <- write_rds(wp, "geodata/wp_nga.rds")
+```
+
+In the code chunk below, 'write_rds()' of readr package is used to save the extracted sf data table into an output file in rds data format.
+
+## Data Wrangling
+
+### Extracting the necessary data
+
+```{r}
+wp_nga <- read_rds("geospatial/wp_nga.rds") %>%
+  mutate(status_cle =
+           replace_na(status_cle, "Unknown"))
+
+```
+
+In the code chunk below, 'freq()'
+
+```{r}
+wpt_functional <- wp_nga %>%
+  filter(status_cle %in%
+           c())
+```
