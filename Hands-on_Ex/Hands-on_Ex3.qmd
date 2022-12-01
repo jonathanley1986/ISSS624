@@ -498,3 +498,57 @@ The code chunk below will be used to transform *shan_ict* data frame into a data
 ```{r}
 shan_ict_mat <- data.matrix(shan_ict)
 ```
+
+#### Plotting interactive cluster heatmap using *heatmaply()*
+
+In the code chunk below, the [*heatmaply()*](https://talgalili.github.io/heatmaply/reference/heatmaply.html) of [heatmaply](https://talgalili.github.io/heatmaply/) package is used to build an interactive cluster heatmap.
+
+```{r}
+heatmaply(normalize(shan_ict_mat),
+          Colv=NA,
+          dist_method = "euclidean",
+          hclust_method = "ward.D",
+          seriate = "OLO",
+          colors = Blues,
+          k_row = 6,
+          margins = c(NA,200,60,NA),
+          fontsize_row = 4,
+          fontsize_col = 5,
+          main="Geographic Segmentation of Shan State by ICT indicators",
+          xlab = "ICT Indicators",
+          ylab = "Townships of Shan State"
+          )
+```
+
+### Mapping the clusters formed
+
+With closed examination of the dendragram above, we have decided to retain six clusters.
+
+[*cutree()*](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cutree.html) of R Base will be used in the code chunk below to derive a 6-cluster model.
+
+```{r}
+groups <- as.factor(cutree(hclust_ward, k=6))
+```
+
+The output is called *groups*. It is a *list* object.
+
+In order to visualise the clusters, the *groups* object need to be appended onto *shan_sf* simple feature object.
+
+The code chunk below form the join in three steps:
+
+-   the *groups* list object will be converted into a matrix;
+
+-   *cbind()* is used to append *groups* matrix onto shan_sf to produce an output simple feature object called `shan_sf_cluster`; and
+
+-   *rename* of **dplyr** package is used to rename *as.matrix.groups* field as *CLUSTER*.
+
+```{r}
+shan_sf_cluster <- cbind(shan_sf, as.matrix(groups)) %>%
+  rename(`CLUSTER`=`as.matrix.groups.`)
+```
+
+Next, *qtm()* of **tmap** package is used to plot the choropleth map showing the cluster formed.
+
+```{r}
+qtm(shan_sf_cluster, "CLUSTER")
+```
