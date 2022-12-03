@@ -1,6 +1,12 @@
 ---
 title: "Hands-on Exercise 3: Geographical Segmentation with Spatially Constrained Clustering Techniques"
 editor: visual
+format: html
+
+execute: 
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## Overview
