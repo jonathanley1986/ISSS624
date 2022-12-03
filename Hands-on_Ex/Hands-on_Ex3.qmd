@@ -774,7 +774,7 @@ With reference to the graphs above, alpha = 0.3 will be used as shown in the cod
 clustG <- hclustgeo(proxmat, distmat, alpha = 0.3)
 ```
 
-Next, `cutree()` is used to derive the cluster objecct.
+Next, `cutree()` is used to derive the cluster object.
 
 ```{r}
 groups <- as.factor(cutree(clustG, k=6))
