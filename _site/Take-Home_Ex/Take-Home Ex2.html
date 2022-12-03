@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ISSS624 - Take-Home Exercise 2</title>
+<title>ISSS624 - Take-Home Exercise 2 - Geospatial Analytics for Social Good</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,14 +128,25 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">1.1. Background</a></li>
+  <li><a href="#overall-goal" id="toc-overall-goal" class="nav-link" data-scroll-target="#overall-goal">1.2. Overall Goal</a></li>
+  <li><a href="#key-objectives" id="toc-key-objectives" class="nav-link" data-scroll-target="#key-objectives">1.3. Key Objectives</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Take-Home Exercise 2</h1>
+<h1 class="title">Take-Home Exercise 2 - Geospatial Analytics for Social Good</h1>
 </div>
 
 
@@ -149,8 +160,28 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">1.1. Background</h3>
+<p>The process of creating regions is called <a href="https://www.researchgate.net/publication/28153673_Supervised_Regionalization_Methods_A_Survey/link/0fcfd5094046b13d35000000/download">regionalisation</a>. A regionalisation is a special kind of clustering where the objective is to group observations which are similar in their statistical attributes, but also in their spatial location. In this sense, regionalization embeds the same logic as standard clustering techniques, but also applies a series of geographical constraints. Often, these constraints relate to connectivity: two candidates can only be grouped together in the same region if there exists a path from one member to another member that never leaves the region. These paths often model the spatial relationships in the data, such as contiguity or proximity. However, connectivity does not always need to hold for all regions, and in certain contexts it makes sense to relax connectivity or to impose different types of geographic constraints.</p>
+</section>
+<section id="overall-goal" class="level3">
+<h3 class="anchored" data-anchor-id="overall-goal">1.2. Overall Goal</h3>
+<p>This study aims to apply appropriate clustering techniques to reveal the spatial patterns of water points in Nigeria.</p>
+</section>
+<section id="key-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="key-objectives">1.3. Key Objectives</h3>
+<p>Using the appropriate R packages, we will need to:</p>
+<ul>
+<li><p>Prepare the dataset and save it in simple feature data frameformat, as well as derive the proportion of functional and non-functional water point at LGA level</p></li>
+<li><p>Conduct thematic mapping analysis to examine the spatial distribution of functional and non-functional water point rate at LGA level</p></li>
+<li><p>Conduct hotspot areas and outliers/clusters maps of functional and non0functional water point rate at LGA level</p></li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
