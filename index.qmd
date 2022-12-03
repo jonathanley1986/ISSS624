@@ -1,5 +1,5 @@
 ---
-title: "ISSS624 v2"
+title: "ISSS624"
 ---
 
 This is a Quarto website.
