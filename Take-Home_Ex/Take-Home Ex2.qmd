@@ -100,7 +100,7 @@ wp2 <- st_read(dsn = "geodata",
 
 ```
 
-The code chunk below uses write_rds() of readr package to save the extracted sf data table (i.e. wp) into an output in rds data format. The output file is called wp_nga.rds and it is saved in geodata sub-folder.
+The code chunk below uses write_rds() of readr package to save the extracted sf data table (i.e. wp) into an output in rds data format. The output file is called wp_nga2.rds and it is saved in geodata sub-folder.
 
 ```{r}
 #| eval: false
@@ -126,6 +126,62 @@ Use replace_na() to recode all the NA values in status_cle field into the Unknow
 #| eval: false
 wp_nga2 <- read_rds("geodata/wp_nga2.rds") %>%
   mutate(status_cle = replace_na(status_cle, "Unknown")) 
+```
+
+### 3.4 Checking of duplicated area name
+
+We will order our dataframe by alphabetical order based on ADM2_REF and use the duplicated function to retrieve all ADM2_REF that has duplicates and store it in a list.
+
+```{r}
+#| eval: false
+
+nga2 <- (nga2[order(nga2$ADM2_REF), ])
+
+duplicate_area <- nga2$ADM2_REF [nga2$ADM2_REF %in%
+                  nga2$ADM2_REF[duplicated(nga2$ADM2_REF)]]
+
+duplicate_area
+```
+
+From the results, we identified 12 ADM2_REF that are duplicates. We will then leverage on interactive view of tmap to check the location of each area. With the help of Google Map, we will retrive the actual name and state of these areas.
+
+| Index | Actual Area Name  |
+|-------|-------------------|
+| 94    | Bassa (Kogi)      |
+| 95    | Bassa (Plateau)   |
+| 304   | Ifelodun (Kwara)  |
+| 305   | Ifelodun (Osun)   |
+| 355   | Irepodun (Kawara) |
+| 356   | Irepodun (Osun)   |
+| 518   | Nassarawa         |
+| 546   | Obi (Benue)       |
+| 547   | Obi (Nasarawa)    |
+| 693   | Surulere (Lagos)  |
+| 694   | Surulere (Oyo)    |
+
+```{r}
+#| eval: false
+
+tmap_mode("view")
+
+tm_shape(nga2[nga2$ADM2_REF %in% duplicate_area,]) +
+  tm_polygons()
+```
+
+```{r}
+#| eval: false
+tmap_mode("plot")
+```
+
+We will now access the individual index of the `nga2` data frame and change the value. Lastly, we use the [`length()`](https://rdrr.io/r/base/length.html) function to ensure there is no more duplicated ADM2_REF.
+
+```{r}
+#| eval: false
+
+nga2$ADM2_REF[c(94,95,304,305,355,356,519,546,547,693,694)] <- c("Bassa (Kogi)","Bassa (Plateau)", "Ifelodun (Kwara)","Ifelodun (Osun)", "Irepodun (Kwara)","Irepodun (Osun), Nassarawa","Obi (Benue)","Obi(Nasarawa)", "Surulere (Lagos)","Surulere (Oyo)")
+
+length((nga2$ADM2_REF[ nga2$ADM2_REF %in% nga2$ADM2_REF[duplicated(nga2$ADM2_REF)] ]))
+
 ```
 
 ## 4. Exploratory Spatial Data Analysis
