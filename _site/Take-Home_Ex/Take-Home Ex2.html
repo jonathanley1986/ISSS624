@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -138,6 +201,27 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#overall-goal" id="toc-overall-goal" class="nav-link" data-scroll-target="#overall-goal">1.2. Overall Goal</a></li>
   <li><a href="#key-objectives" id="toc-key-objectives" class="nav-link" data-scroll-target="#key-objectives">1.3. Key Objectives</a></li>
   </ul></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">2. Setup</a>
+  <ul class="collapse">
+  <li><a href="#packages-used" id="toc-packages-used" class="nav-link" data-scroll-target="#packages-used">2.1 Packages Used</a></li>
+  <li><a href="#datasets-used" id="toc-datasets-used" class="nav-link" data-scroll-target="#datasets-used">2.2 Datasets Used</a></li>
+  <li><a href="#launching-the-packages-in-r" id="toc-launching-the-packages-in-r" class="nav-link" data-scroll-target="#launching-the-packages-in-r">2.3 Launching the packages in R</a></li>
+  </ul></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3. Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#import-water-point-shapefile-into-r-environment" id="toc-import-water-point-shapefile-into-r-environment" class="nav-link" data-scroll-target="#import-water-point-shapefile-into-r-environment">3.1 Import water point shapefile into R environment</a></li>
+  <li><a href="#import-nigeria-lga-boundary-data-into-r-environment" id="toc-import-nigeria-lga-boundary-data-into-r-environment" class="nav-link" data-scroll-target="#import-nigeria-lga-boundary-data-into-r-environment">3.2 Import Nigeria LGA boundary data into R environment</a></li>
+  <li><a href="#recoding-na-values-into-string" id="toc-recoding-na-values-into-string" class="nav-link" data-scroll-target="#recoding-na-values-into-string">3.3 Recoding NA values into string</a></li>
+  </ul></li>
+  <li><a href="#exploratory-spatial-data-analysis" id="toc-exploratory-spatial-data-analysis" class="nav-link" data-scroll-target="#exploratory-spatial-data-analysis">4. Exploratory Spatial Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#extract-functional-water-point-data" id="toc-extract-functional-water-point-data" class="nav-link" data-scroll-target="#extract-functional-water-point-data">4.1 Extract functional water point data</a></li>
+  <li><a href="#extract-non-functional-water-point-data" id="toc-extract-non-functional-water-point-data" class="nav-link" data-scroll-target="#extract-non-functional-water-point-data">4.2 Extract non-functional water point data</a></li>
+  <li><a href="#extract-water-point-data-with-unknown-class" id="toc-extract-water-point-data-with-unknown-class" class="nav-link" data-scroll-target="#extract-water-point-data-with-unknown-class">4.3 Extract water point data with Unknown class</a></li>
+  <li><a href="#performing-point-in-polygon-count" id="toc-performing-point-in-polygon-count" class="nav-link" data-scroll-target="#performing-point-in-polygon-count">4.4 Performing Point-in-Polygon Count</a></li>
+  <li><a href="#saving-the-analytical-data-table" id="toc-saving-the-analytical-data-table" class="nav-link" data-scroll-target="#saving-the-analytical-data-table">4.5 Saving the Analytical Data Table</a></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -175,12 +259,173 @@ ul.task-list li input[type="checkbox"] {
 <p>Using the appropriate R packages, we will need to:</p>
 <ul>
 <li><p>Prepare the dataset and save it in simple feature data frameformat, as well as derive the proportion of functional and non-functional water point at LGA level</p></li>
-<li><p>Conduct thematic mapping analysis to examine the spatial distribution of functional and non-functional water point rate at LGA level</p></li>
-<li><p>Conduct hotspot areas and outliers/clusters maps of functional and non0functional water point rate at LGA level</p></li>
+<li><p>Conduct thematic mapping analysis to examine the spatial distribution of water points at LGA level</p></li>
+<li><p>Conduct hotspot areas and outliers/clusters maps of water points at LGA level</p></li>
 </ul>
-
-
 </section>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">2. Setup</h2>
+<section id="packages-used" class="level3">
+<h3 class="anchored" data-anchor-id="packages-used">2.1 Packages Used</h3>
+<p>The R packages that we will be using for this analysis area:</p>
+<ul>
+<li><p><strong>sf, rgdal</strong>: used for importing, managing, and processing geospatial data</p></li>
+<li><p><strong>spdep</strong>: used for computing spatial weights, global and local spatial auto-correlation statistics</p></li>
+<li><p><strong>tidyverse</strong>: used for wrangling attribute data</p></li>
+<li><p><strong>tmap</strong>: used for creating cartographic quality choropleth map</p></li>
+<li><p><strong>coorplot, ggpubr, heatmaply:</strong> used for multivariate data visualization and analysis</p></li>
+<li><p><strong>cluster, ClustGeo:</strong> used for cluster analysis</p></li>
+<li><p><strong>funModeling:</strong> used for exploratory data analysis, data preparation and model performance</p></li>
+</ul>
+<p>In addition, the following tidyverse packages will be used:</p>
+<ul>
+<li><p><strong>readr</strong> for reading rectangular data from csv, tsv and fwf</p></li>
+<li><p><strong>tidyr</strong> for manipulating and tidying data</p></li>
+<li><p><strong>dplyr</strong> for wrangling and transforming data</p></li>
+<li><p><strong>ggplot2</strong> for visualising data</p></li>
+</ul>
+</section>
+<section id="datasets-used" class="level3">
+<h3 class="anchored" data-anchor-id="datasets-used">2.2 Datasets Used</h3>
+<p>2 geospatial datasets will be utilized for this study:</p>
+<ul>
+<li><p><strong>geo_export_338e5689-bd72-4866-bfde-8997933e9897</strong></p>
+<p>WPdx+ dataset from <a href="https://www.waterpointdata.org/access-data/">WPdx Global Data Repositories</a></p></li>
+<li><p><strong>nga_admbnda_adm2_osgof_20190417</strong></p>
+<p>Nigeria Level-2 Administrative Boundary (also known as Local Government Area) polygon features GIS data from <a href="https://www.geoboundaries.org/">geoBoundaries</a></p></li>
+</ul>
+</section>
+<section id="launching-the-packages-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="launching-the-packages-in-r">2.3 Launching the packages in R</h3>
+<p>The code chunk below is used to perform the following tasks:</p>
+<ul>
+<li><p>creating a package list containing the necessary R packages,</p></li>
+<li><p>checking if the R packages in the package list have been installed in R,</p>
+<ul>
+<li>if they have yet to be installed, RStudio will installed the missing packages,</li>
+</ul></li>
+<li><p>launching the packages into R environment.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(rgdal, sf, spdep, tmap, tidyverse, ClustGeo, ggpubr, cluster, factoextra, NbClust, heatmaply, corrplot, psych, funModeling)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">3. Data Preparation</h2>
+<p>In this section, we will bring geospatial data into R environment. The geospatial data is in ESRI shapefile format.</p>
+<section id="import-water-point-shapefile-into-r-environment" class="level3">
+<h3 class="anchored" data-anchor-id="import-water-point-shapefile-into-r-environment">3.1 Import water point shapefile into R environment</h3>
+<p>The code chunk below uses st_read() of sf package to import Nigeria shapefile into R. The imported shapefile will be simple features Object of sf.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wp2 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"geodata"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">layer =</span> <span class="st">"geo_export_338e5689-bd72-4866-bfde-8997933e9897"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(clean_coun <span class="sc">==</span> <span class="st">"Nigeria"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">23</span>, <span class="dv">36</span><span class="sc">:</span><span class="dv">40</span>, <span class="dv">43</span><span class="sc">:</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The code chunk below uses write_rds() of readr package to save the extracted sf data table (i.e.&nbsp;wp) into an output in rds data format. The output file is called wp_nga.rds and it is saved in geodata sub-folder.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wp_nga2 <span class="ot">&lt;-</span> <span class="fu">write_rds</span>(wp2, <span class="st">"geodata/wp_nga2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="import-nigeria-lga-boundary-data-into-r-environment" class="level3">
+<h3 class="anchored" data-anchor-id="import-nigeria-lga-boundary-data-into-r-environment">3.2 Import Nigeria LGA boundary data into R environment</h3>
+<p>We are going to import LGA boundary data into R environment using the following code chunk, st_read() of sf package. It is used to import nga_admbnda_adm2_osgof_20190417 shapefile and save the imported geospatial data into simple feature data table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nga2 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"geodata"</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">layer =</span> <span class="st">"nga_admbnda_adm2_osgof_20190417"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="recoding-na-values-into-string" class="level3">
+<h3 class="anchored" data-anchor-id="recoding-na-values-into-string">3.3 Recoding NA values into string</h3>
+<p>Use replace_na() to recode all the NA values in status_cle field into the Unknown.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wp_nga2 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"geodata/wp_nga2.rds"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">status_cle =</span> <span class="fu">replace_na</span>(status_cle, <span class="st">"Unknown"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="exploratory-spatial-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-spatial-data-analysis">4. Exploratory Spatial Data Analysis</h2>
+<p>Use freq() of funModeling package to display the distribution of status_cle field in wp_nga.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_nga2,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">"status_cle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="extract-functional-water-point-data" class="level3">
+<h3 class="anchored" data-anchor-id="extract-functional-water-point-data">4.1 Extract functional water point data</h3>
+<p>In the code chunk below, filter() of dplyr is used to select functional water points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wpt_functional <span class="ot">&lt;-</span> wp_nga2 <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_cle <span class="sc">%in%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Functional"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but not in use"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but needs repair"</span>))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_functional, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'status_cle'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extract-non-functional-water-point-data" class="level3">
+<h3 class="anchored" data-anchor-id="extract-non-functional-water-point-data">4.2 Extract non-functional water point data</h3>
+<p>In the code chunk below, filter() of dplyr is used to select non-functional water points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>wpt_nonfunctional <span class="ot">&lt;-</span> wp_nga2 <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_cle <span class="sc">%in%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Abandoned/Decommissioned"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Abandoned"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Non-Functional"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Non functional due to dry season"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Non-Functional due to dry season"</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_nonfunctional, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'status_cle'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extract-water-point-data-with-unknown-class" class="level3">
+<h3 class="anchored" data-anchor-id="extract-water-point-data-with-unknown-class">4.3 Extract water point data with Unknown class</h3>
+<p>In the code chunk below, filter() of dplyr is used to select unknown water points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wpt_unknown <span class="ot">&lt;-</span> wp_nga2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_cle <span class="sc">==</span> <span class="st">"Unknown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="performing-point-in-polygon-count" class="level3">
+<h3 class="anchored" data-anchor-id="performing-point-in-polygon-count">4.4 Performing Point-in-Polygon Count</h3>
+<p>The code chunk below performs 2 operations at one go. Firstly, it uses st_intersects() to identify the various water point types (e.g.&nbsp;total, functional, non-functional and unknown) located inside each LGA boundary. Next, length() of Base R is used to calculate the number of water points that fall within each LGA boundary.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nga_wp2 <span class="ot">&lt;-</span> nga2 <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">total wpt</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(nga2, wp_nga2))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(nga2, wpt_functional))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt non-functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(nga2, wpt_nonfunctional))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt unknown</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(nga2, wpt_unknown)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="saving-the-analytical-data-table" class="level3">
+<h3 class="anchored" data-anchor-id="saving-the-analytical-data-table">4.5 Saving the Analytical Data Table</h3>
+<p>The code chunk below uses mutate() of dplyr package to derive 2 fields namely pct_functional and pct_non-functional. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nga_wp2 <span class="ot">&lt;-</span> nga_wp2 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct_functional =</span> <span class="st">`</span><span class="at">wpt functional</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">total wpt</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">pct_non-functional</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">wpt non-functional</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">total wpt</span><span class="st">`</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Thereafter, we will save the sf data table in rds format for subsequent analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nga_wp2, <span class="st">"geodata/nga_wp2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+
+
 </section>
 
 </main> <!-- /main -->
