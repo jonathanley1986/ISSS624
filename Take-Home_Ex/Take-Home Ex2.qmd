@@ -320,7 +320,7 @@ nga_wp2 <- nga2 %>%
 
 ### 4.8 Saving the Analytical Data Table
 
-The code chunk below uses mutate() of dplyr package to derive 2 fields namely pct_functional and pct_non-functional. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.
+The code chunk below uses mutate() of dplyr package to derive 6 fields namely pct_functional, pct_non-functional, pct_handpump, pct_usagecap_below1000, pct_usagecap_atleast1000 and pct_rural. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.
 
 ```{r}
 #| eval: false

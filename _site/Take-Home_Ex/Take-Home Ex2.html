@@ -551,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="saving-the-analytical-data-table" class="level3">
 <h3 class="anchored" data-anchor-id="saving-the-analytical-data-table">4.8 Saving the Analytical Data Table</h3>
-<p>The code chunk below uses mutate() of dplyr package to derive 2 fields namely pct_functional and pct_non-functional. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.</p>
+<p>The code chunk below uses mutate() of dplyr package to derive 6 fields namely pct_functional, pct_non-functional, pct_handpump, pct_usagecap_below1000, pct_usagecap_atleast1000 and pct_rural. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>nga_wp2 <span class="ot">&lt;-</span> nga_wp2 <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct_functional =</span> <span class="st">`</span><span class="at">wpt functional</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">total wpt</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
