@@ -184,14 +184,36 @@ length((nga2$ADM2_REF[ nga2$ADM2_REF %in% nga2$ADM2_REF[duplicated(nga2$ADM2_REF
 
 ```
 
+### 3.5 Perform data binning for usage capacity field
+
+Before we perform data binning, we will review the summary statistics of usage capacity field using the code chunk below. Based on the We will then use cut() function to categorize the values under usage_cap field to \<1000 and \>=1000.
+
+```{r}
+#| eval: false
+
+summary(wp_nga2$usage_cap)
+
+wp_nga2 <- wp_nga2 %>% 
+  mutate(usage_cap_bin = cut(usage_cap, breaks = c(0, 999, Inf), labels = c("<1000", ">=1000")))
+```
+
 ## 4. Exploratory Spatial Data Analysis
 
-Use freq() of funModeling package to display the distribution of status_cle field in wp_nga.
+Use freq() of funModeling package to display the distribution of status_cle, X_water_tec, usage_cap_bin, is_urban field in wp_nga2.
 
 ```{r}
 #| eval: false
 freq(data = wp_nga2,
      input = "status_cle")
+
+freq(data = wp_nga2,
+     input = "X_water_tec")
+
+freq(data = wp_nga2,
+     input = "usage_cap_bin")
+
+freq(data = wp_nga2,
+     input = "is_urban")
 ```
 
 ### 4.1 Extract functional water point data
@@ -238,9 +260,42 @@ wpt_unknown <- wp_nga2 %>%
   filter(status_cle == "Unknown")
 ```
 
-### 4.4 Performing Point-in-Polygon Count
+### 4.4 Extract water point data with Hand Pump technology
 
-The code chunk below performs 2 operations at one go. Firstly, it uses st_intersects() to identify the various water point types (e.g. total, functional, non-functional and unknown) located inside each LGA boundary. Next, length() of Base R is used to calculate the number of water points that fall within each LGA boundary.
+In the code chunk below, filter() of dplyr is used to select hand pump water points.
+
+```{r}
+#| eval: false
+wpt_handpump <- wp_nga2 %>%
+  filter(X_water_tec == "Hand Pump")
+```
+
+### 4.5 Extract LGA usage capacity
+
+In the code chunk below, filter() of dplyr is used to select LGA usage capacities for \<1000 and \>=1000 respectively.
+
+```{r}
+#| eval: false
+lga_usage_cap_below1000 <- wp_nga2 %>%
+  filter(usage_cap_bin == "<1000")
+
+lga_usage_cap_atleast1000 <- wp_nga2 %>%
+  filter(usage_cap_bin == ">=1000")
+```
+
+### 4.6 Extract rural water points
+
+In the code chunk below, filter() of dplyr is used to select rural water points.
+
+```{r}
+#| eval: false
+wpt_rural <- wp_nga2 %>%
+  filter(is_urban == "False")
+```
+
+### 4.7 Performing Point-in-Polygon Count
+
+The code chunk below performs 2 operations at one go. Firstly, it uses st_intersects() to identify the various water point types (e.g. total, functional, non-functional, hand pump), usage capacity and rural water points located inside each LGA boundary. Next, length() of Base R is used to calculate the number of water points that fall within each LGA boundary.
 
 ```{r}
 #| eval: false
@@ -252,10 +307,18 @@ nga_wp2 <- nga2 %>%
   mutate(`wpt non-functional` = lengths(
     st_intersects(nga2, wpt_nonfunctional))) %>%
   mutate(`wpt unknown` = lengths(
-    st_intersects(nga2, wpt_unknown)))
+    st_intersects(nga2, wpt_unknown))) %>%
+  mutate(`wpt handpump` = lengths(
+    st_intersects(nga2, wpt_handpump))) %>%
+  mutate(`lga usage cap b1000` = lengths(
+    st_intersects(nga2, lga_usage_cap_below1000))) %>%
+  mutate(`lga usage cap a1000` = lengths(
+    st_intersects(nga2, lga_usage_cap_atleast1000))) %>%
+  mutate(`wpt rural` = lengths(
+    st_intersects(nga2, wpt_rural)))
 ```
 
-### 4.5 Saving the Analytical Data Table
+### 4.8 Saving the Analytical Data Table
 
 The code chunk below uses mutate() of dplyr package to derive 2 fields namely pct_functional and pct_non-functional. In order to keep the file size small, select() of dplyr is used to retain on the relevant fields.
 
@@ -264,7 +327,11 @@ The code chunk below uses mutate() of dplyr package to derive 2 fields namely pc
 
 nga_wp2 <- nga_wp2 %>%
   mutate(pct_functional = `wpt functional`/`total wpt`) %>%
-  mutate(`pct_non-functional` = `wpt non-functional`/`total wpt`) 
+  mutate(`pct_non-functional` = `wpt non-functional`/`total wpt`) %>%
+  mutate(`pct_handpump` = `wpt handpump`/`total wpt`) %>%
+  mutate(`pct_usagecap_below1000` = `lga usage cap b1000`/`total wpt`) %>%
+  mutate(`pct_usagecap_atleast1000` = `lga usage cap a1000`/`total wpt`) %>%
+  mutate(`pct_rural` = `wpt rural`/`total wpt`)
 
 ```
 
