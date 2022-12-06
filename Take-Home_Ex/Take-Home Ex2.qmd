@@ -197,7 +197,7 @@ wp_nga2 <- wp_nga2 %>%
   mutate(usage_cap_bin = cut(usage_cap, breaks = c(0, 999, Inf), labels = c("<1000", ">=1000")))
 ```
 
-## 4. Exploratory Spatial Data Analysis
+## 4. Exploratory Data Analysis via Statistical Graphics
 
 Use freq() of funModeling package to display the distribution of status_cle, X_water_tec, usage_cap_bin, is_urban field in wp_nga2.
 
@@ -344,4 +344,10 @@ write_rds(nga_wp2, "geodata/nga_wp2.rds")
 
 ```
 
-## 
+## 5. Exploratory Spatial Data Analysis via Choropleth Map
+
+To take a quick look at the distribution of the water points in LGA of Nigeria, a choropleth map will be prepared. The code chunks below are used to prepare the choropleth by using qtm() function of tmap package.
+
+```{r}
+qtm(nga_wp2, "pct_functional")
+```
