@@ -346,8 +346,153 @@ write_rds(nga_wp2, "geodata/nga_wp2.rds")
 
 ## 5. Exploratory Spatial Data Analysis via Choropleth Map
 
+### 5.1 Preparing a choropleth map - Functional Water Points
+
 To take a quick look at the distribution of the water points in LGA of Nigeria, a choropleth map will be prepared. The code chunks below are used to prepare the choropleth by using qtm() function of tmap package.
 
 ```{r}
+#| eval: false
 qtm(nga_wp2, "pct_functional")
 ```
+
+In order to assess the level of bias in the dataset for functional water points, we will create two choropleth maps, one for the total functional water points and one for the percentage of functional water points by using the code chunk below.
+
+```{r}
+#| eval: false
+tm_shape(nga_wp2) +
+    tm_polygons(c("wpt functional", "pct_functional"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+```
+
+Based on the results above, it shows that there is a higher concentration of functional water points in the northern part of Nigeria.
+
+### 5.2 Preparing a choropleth map - Non-Functional Water Points
+
+Similar to Point 5.1, we will use similar code chunks to prepare choropleth map for non-functional water points.
+
+```{r}
+#| eval: false
+qtm(nga_wp2, "pct_non-functional")
+```
+
+In order to assess the level of bias in the dataset for non-functional water points, we will create two choropleth maps, one for the total non-functional water points and one for the percentage of non-functional water points by using the code chunk below.
+
+```{r}
+#| eval: false
+tm_shape(nga_wp2) +
+    tm_polygons(c("wpt non-functional", "pct_non-functional"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+```
+
+Based on the results above, it shows that there is a higher concentration of non-functional water points in the southern part of Nigeria.
+
+### 5.3 Preparing a choropleth map - Handpump Water Points
+
+```{r}
+#| eval: false
+qtm(nga_wp2, "pct_handpump")
+```
+
+```{r}
+#| eval: false
+tm_shape(nga_wp2) +
+    tm_polygons(c("wpt handpump", "pct_handpump"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+
+```
+
+### 5.4 Preparing a choropleth map - Usage Capacity Below 1000
+
+```{r}
+#| eval: false
+qtm(nga_wp2, "pct_usagecap_below1000")
+```
+
+```{r}
+tm_shape(nga_wp2) +
+    tm_polygons(c("lga usage cap b1000", "pct_usagecap_below1000"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+```
+
+### 5.5 Preparing a choropleth map - Usage Capacity At Least 1000
+
+```{r}
+#| eval: false
+qtm(nga_wp2, "pct_usagecap_atleast1000")
+```
+
+```{r}
+tm_shape(nga_wp2) +
+    tm_polygons(c("lga usage cap a1000", "pct_usagecap_atleast1000"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+```
+
+### 5.6 Preparing a choropleth map - Rural Water Points
+
+```{r}
+#| eval: false
+qtm(nga_wp2, "pct_rural")
+```
+
+```{r}
+
+tm_shape(nga_wp2) +
+    tm_polygons(c("wpt rural", "pct_rural"),
+              style = "jenks") +
+    tm_facets(sync = TRUE, ncol = 2) +
+  tm_legend(legend.position = c("right", "bottom")) +
+  tm_layout(outer.margins=0, asp=0)
+```
+
+## 6. Correlation Analysis
+
+Based on choropleth maps in Section 5, there are missing values. We will replace all the NaN values with Null values.
+
+```{r}
+#| eval: false
+
+nga_wp2$pct_functional[is.nan(nga_wp2$pct_functional)] <-0
+nga_wp2$`pct_non-functional`[is.nan(nga_wp2$`pct_non-functional`)] <-0
+nga_wp2$pct_handpump[is.nan(nga_wp2$pct_handpump)] <-0
+nga_wp2$pct_usagecap_below1000[is.nan(nga_wp2$pct_usagecap_below1000)] <-0
+nga_wp2$pct_usagecap_atleast1000[is.nan(nga_wp2$pct_usagecap_atleast1000)] <-0
+nga_wp2$pct_rural[is.nan(nga_wp2$pct_rural)] <-0
+```
+
+Before we perform cluster analysis, it is important for us to ensure that the cluster variables are not highly correlated. We will use [*corrplot.mixed()*](https://cran.r-project.org/web/packages/corrplot/corrplot.pdf) function of [**corrplot**](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html) package to visualise and analyse the correlation of the input variables.
+
+```{r}
+#| eval: false
+
+cluster_vars.cor = cor(st_set_geometry(nga_wp2[,26:31], NULL))
+  corrplot.mixed(cluster_vars.cor,
+         lower = "ellipse", 
+               upper = "number",
+               tl.pos = "lt",
+               diag = "l",
+               tl.col = "black")
+
+```
+
+The correlation plot above shows that pct_usagecap_below1000 and pct_usagecap_atleast1000 are highly correlated (\>0.85). This suggest that only one of them should be used in the cluster analysis instead of both.
+
+## 7. Hierarchy Cluster Analysis
+
+We will perform hierarchical cluster analysis on the dataset.
+
+### 7.1 Preparing a choropleth map - Non-Functional Water Points
