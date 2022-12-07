@@ -495,4 +495,303 @@ The correlation plot above shows that pct_usagecap_below1000 and pct_usagecap_at
 
 We will perform hierarchical cluster analysis on the dataset.
 
-### 7.1 Preparing a choropleth map - Non-Functional Water Points
+### 7.1 Extracting clustering variables
+
+The code chunk below will be used to extract the clustering variables from the *nga_wp2* simple feature object into data.frame.
+
+```{r}
+#| eval: false
+
+cluster_vars <- nga_wp2 %>%
+  st_set_geometry(NULL) %>%
+  select("ADM2_REF", "pct_functional", "pct_non-functional", "pct_handpump", "pct_usagecap_below1000", "pct_rural")
+head(cluster_vars,10)
+
+```
+
+We need to change the rows by township name instead of row number. Thereafter, we will delete the ADM2_REF field by using the code chunk below.
+
+```{r}
+#| eval: false
+
+row.names(cluster_vars) <- cluster_vars$"ADM2_REF"
+head(cluster_vars,10)
+
+nga_wp2_hc <- select(cluster_vars, c(2:6))
+head(nga_wp2_hc, 10)
+
+```
+
+### 7.2 Visualizing raw values without data standardization
+
+```{r}
+#| eval: false
+
+f <- ggplot(data = nga_wp2_hc, 
+             aes(x= `pct_functional`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Raw values without standardisation - Functional")
+
+nf <- ggplot(data = nga_wp2_hc, 
+             aes(x= `pct_non-functional`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Raw values without standardisation - Non-Functional")
+
+h <- ggplot(data = nga_wp2_hc, 
+             aes(x= `pct_handpump`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Raw values without standardisation - Handpump")
+
+ucap <- ggplot(data = nga_wp2_hc, 
+             aes(x= `pct_usagecap_below1000`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Raw values without standardisation - Usage Cap Below 1000")
+
+r <- ggplot(data = nga_wp2_hc, 
+             aes(x= `pct_rural`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Raw values without standardisation - Rural")
+
+ggarrange(f, nf, h, ucap, r,
+          ncol = 3,
+          nrow = 2)
+
+```
+
+### 7.3 Z-score standardization
+
+The code chunk below will be used to stadardisation the clustering variables by using Z-score method.
+
+```{r}
+#| eval: false
+
+nga_wp2_hc.z <- scale(nga_wp2_hc)
+describe(nga_wp2_hc.z)
+
+```
+
+### 7.4 Visualizing standardized clustering variables
+
+The code chunk below plot the 5 scaled fields.
+
+```{r}
+#| eval: false
+
+nga_wp2_hc_z_df <- as.data.frame(nga_wp2_hc.z)
+fz <- ggplot(data=nga_wp2_hc_z_df, 
+       aes(x=`pct_functional`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Z-score Standardisation - Functional")
+
+nga_wp2_hc_z_df <- as.data.frame(nga_wp2_hc.z)
+nfz <- ggplot(data=nga_wp2_hc_z_df, 
+       aes(x=`pct_non-functional`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Z-score Standardisation - Non-Functional")
+
+nga_wp2_hc_z_df <- as.data.frame(nga_wp2_hc.z)
+hz <- ggplot(data=nga_wp2_hc_z_df, 
+       aes(x=`pct_handpump`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Z-score Standardisation - Handpump")
+
+nga_wp2_hc_z_df <- as.data.frame(nga_wp2_hc.z)
+ucapz <- ggplot(data=nga_wp2_hc_z_df, 
+       aes(x=`pct_usagecap_below1000`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Z-score Standardisation - Usage Cap Below 1000")
+
+nga_wp2_hc_z_df <- as.data.frame(nga_wp2_hc.z)
+rz <- ggplot(data=nga_wp2_hc_z_df, 
+       aes(x=`pct_rural`)) +
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  ggtitle("Z-score Standardisation - Rural")
+
+ggarrange(fz, nfz, hz, ucapz, rz,
+          ncol = 3,
+          nrow = 2)
+```
+
+### 7.5 Computing proximity matrix
+
+We will compute the proximity matrix by using [*dist()*](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/dist.html) of R. The code chunk below is used to compute the proximity matrix using *euclidean* method.
+
+```{r}
+#| eval: false
+
+proxmat <- dist(nga_wp2_hc_z_df, method = 'euclidean')
+
+proxmat
+
+```
+
+### 7.6 Computing hierarchical clustering
+
+We will use [*hclust()*](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/hclust.html) of R stats to compute hierarchical clustering.The code chunk below performs hierarchical cluster analysis using ward.D method. The hierarchical clustering output is stored in an object of class **hclust** which describes the tree produced by the clustering process.
+
+```{r}
+#| eval: false
+hclust_ward <- hclust(proxmat, method = 'ward.D')
+```
+
+We can then plot the tree by using *plot()* of R Graphics as shown in the code chunk below.
+
+```{r}
+#| eval: false
+
+plot(hclust_ward, cex = 0.1)
+
+```
+
+### 7.7 Selecting the optimal clustering algorithm
+
+The code chunk below will be used to compute the agglomerative coefficients of all hierarchical clustering algorithms (values closer to 1 suggest strong clustering structure).
+
+```{r}
+#| eval: false
+
+m <- c( "average", "single", "complete", "ward")
+names(m) <- c( "average", "single", "complete", "ward")
+
+ac <- function(x) {
+  agnes(nga_wp2_hc_z_df, method = x)$ac
+}
+
+map_dbl(m, ac)
+
+```
+
+With reference to the output above, we can see that Ward\'s method provides the strongest clustering structure among the four methods assessed. Hence, in the subsequent analysis, only Ward\'s method will be used.
+
+### 7.8 Determining Optimal Clusters
+
+We will use gap statistic method to help determine the optimal cluster. To compute the gap statistic, [*clusGap()*](https://www.rdocumentation.org/packages/cluster/versions/2.1.0/topics/clusGap) of [**cluster**](https://cran.r-project.org/web/packages/cluster/) package will be used.
+
+```{r}
+#| eval: false
+
+set.seed(12345)
+gap_stat <- clusGap(nga_wp2_hc_z_df, 
+                    FUN = hcut, 
+                    nstart = 25, 
+                    K.max = 20, 
+                    B = 50)
+# Print the result
+print(gap_stat, method = "firstmax")
+
+```
+
+Also note that the [*hcut*](https://rpkgs.datanovia.com/factoextra/reference/hcut.html) function used is from [**factoextra**](https://rpkgs.datanovia.com/factoextra/) package.
+
+Next, we can visualise the plot by using [*fviz_gap_stat()*](https://rpkgs.datanovia.com/factoextra/reference/fviz_nbclust.html) of [**factoextra**](https://rpkgs.datanovia.com/factoextra/) package.
+
+```{r}
+#| eval: false
+fviz_gap_stat(gap_stat)
+```
+
+By examine the gap statistic graph, the 18-cluster gives the largest gap statistic and should be the next best cluster to pick.
+
+### 7.9 Visually-driven hierarchical clustering analysis
+
+We will apply heatmaply package to build both highly interactive cluster heatmap or static cluster heatmap.
+
+#### 7.9.1 Transforming the data frame into a matrix
+
+The data was loaded into a data frame, but it has to be a data matrix to make your heatmap.
+
+The code chunk below will be used to transform nga_wp2_hc_z\_df data frame into a data matrix.
+
+```{r}
+#| eval: false
+
+nga_wp2_hc_z_df_mat <- data.matrix(nga_wp2_hc_z_df)
+
+```
+
+#### 7.9.2 Plotting interactive cluster heatmap using *heatmaply()*
+
+In the code chunk below, the [*heatmaply()*](https://talgalili.github.io/heatmaply/reference/heatmaply.html) of [heatmaply](https://talgalili.github.io/heatmaply/) package is used to build an interactive cluster heatmap.
+
+```{r}
+#| eval: false
+
+heatmaply(normalize(nga_wp2_hc_z_df_mat),
+          Colv=NA,
+          dist_method = "euclidean",
+          hclust_method = "ward.D",
+          seriate = "OLO",
+          colors = Blues,
+          k_row = 18,
+          margins = c(NA,200,60,NA),
+          fontsize_row = 4,
+          fontsize_col = 5,
+          main="Geographic Segmentation of Nigeria State by different indicators",
+          xlab = "Different Indicators",
+          ylab = "Townships of Nigeria State"
+          )
+
+
+```
+
+### 7.10 Mapping the clusters formed
+
+With closed examination of the dendragram above, we have decided to retain 18 clusters.
+
+[*cutree()*](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cutree.html) of R Base will be used in the code chunk below to derive a 18-cluster model.
+
+```{r}
+#| eval: false
+
+groups <- as.factor(cutree(hclust_ward, k=18))
+
+```
+
+The code chunk below form the join in three steps:
+
+-   the *groups* list object will be converted into a matrix;
+
+-   *cbind()* is used to append *groups* matrix onto nga_wp2 to produce an output simple feature object called `nga_wp2_cluster`; and
+
+-   *rename* of **dplyr** package is used to rename *as.matrix.groups* field as *CLUSTER*.
+
+```{r}
+#| eval: false
+
+nga_wp2_cluster <- cbind(nga_wp2, as.matrix(groups)) %>%
+  rename(`CLUSTER`=`as.matrix.groups.`)
+
+```
+
+Next, *qtm()* of **tmap** package is used to plot the choropleth map showing the cluster formed.
+
+```{r}
+
+#| eval: false
+
+qtm(nga_wp2_cluster, "CLUSTER")
+
+
+```
+
+The choropleth map above reveals the clusters are very fragmented.
