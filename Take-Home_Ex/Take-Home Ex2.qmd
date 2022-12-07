@@ -681,7 +681,7 @@ map_dbl(m, ac)
 
 ```
 
-With reference to the output above, we can see that Ward\'s method provides the strongest clustering structure among the four methods assessed. Hence, in the subsequent analysis, only Ward\'s method will be used.
+With reference to the output above, we can see that Ward's method provides the strongest clustering structure among the four methods assessed. Hence, in the subsequent analysis, only Ward's method will be used.
 
 ### 7.8 Determining Optimal Clusters
 
@@ -795,3 +795,96 @@ qtm(nga_wp2_cluster, "CLUSTER")
 ```
 
 The choropleth map above reveals the clusters are very fragmented.
+
+## 8. Spatially Constrained Clustering: ClustGeo Method
+
+Using the **ClustGeo** package to perform non-spatially constrained hierarchical cluster analysis and spatially constrained cluster analysis.
+
+### 8.1 Ward-like hierarchical clustering: ClustGeo
+
+To perform non-spatially constrained hierarchical clustering, we only need to provide the function a dissimilarity matrix as shown in the code chunk below.
+
+```{r}
+
+#| eval: false
+
+nongeo_cluster <- hclustgeo(proxmat)
+plot(nongeo_cluster, cex = 0.5)
+rect.hclust(nongeo_cluster, 
+            k = 18, 
+            border = 2:5)
+
+
+```
+
+### 8.2 Mapping the clusters formed
+
+```{r}
+
+#| eval: false
+
+groups <- as.factor(cutree(nongeo_cluster, k=18))
+
+nga_wp2_ngeo_cluster <- cbind(nga_wp2, as.matrix(groups)) %>%
+  rename(`CLUSTER` = `as.matrix.groups.`)
+
+qtm(nga_wp2_ngeo_cluster, "CLUSTER")
+```
+
+### 8.3 Spatially Constrained Hierarchical Clustering
+
+Before we can performed spatially constrained hierarchical clustering, a spatial distance matrix will be derived by using [`st_distance()`](https://r-spatial.github.io/sf/reference/geos_measures.html) of sf package.
+
+```{r}
+
+#| eval: false
+
+dist <- st_distance(nga_wp2, nga_wp2)
+distmat <- as.dist(dist)
+
+
+```
+
+Notice that `as.dist()` is used to convert the data frame into matrix.
+
+Next, `choicealpha()` will be used to determine a suitable value for the mixing parameter alpha as shown in the code chunk below.
+
+```{r}
+#| eval: false
+
+cr <- choicealpha(proxmat, distmat, range.alpha = seq(0, 1, 0.1), K=18, graph = TRUE)
+
+```
+
+With reference to the graphs above, alpha = 0.3 will be used as shown in the code chunk below.
+
+```{r}
+#| eval: false
+
+clustG <- hclustgeo(proxmat, distmat, alpha = 0.3)
+```
+
+Next, `cutree()` is used to derive the cluster object.
+
+```{r}
+#| eval: false
+groups <- as.factor(cutree(clustG, k=18))
+```
+
+We will then join back the group list with shan_sf polygon feature data frame by using the code chun below.
+
+```{r}
+#| eval: false
+
+nga_wp2_Gcluster <- cbind(nga_wp2, as.matrix(groups)) %>%
+  rename(`CLUSTER` = `as.matrix.groups.`)
+
+```
+
+We can not plot the map of the newly delineated spatially constrained clusters.
+
+```{r}
+#| eval: false
+
+qtm(nga_wp2_Gcluster, "CLUSTER")
+```
