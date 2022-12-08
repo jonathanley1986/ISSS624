@@ -426,6 +426,7 @@ qtm(nga_wp2, "pct_usagecap_below1000")
 ```
 
 ```{r}
+#| eval: false
 tm_shape(nga_wp2) +
     tm_polygons(c("lga usage cap b1000", "pct_usagecap_below1000"),
               style = "jenks") +
@@ -446,6 +447,7 @@ qtm(nga_wp2, "pct_usagecap_atleast1000")
 ```
 
 ```{r}
+#| eval: false
 tm_shape(nga_wp2) +
     tm_polygons(c("lga usage cap a1000", "pct_usagecap_atleast1000"),
               style = "jenks") +
@@ -808,7 +810,6 @@ nga_wp2_cluster <- cbind(nga_wp2, as.matrix(groups)) %>%
 Next, *qtm()* of **tmap** package is used to plot the choropleth map showing the cluster formed.
 
 ```{r}
-
 #| eval: false
 
 qtm(nga_wp2_cluster, "CLUSTER")
@@ -827,7 +828,6 @@ Using the **ClustGeo** package to perform non-spatially constrained hierarchical
 To perform non-spatially constrained hierarchical clustering, we only need to provide the function a dissimilarity matrix as shown in the code chunk below.
 
 ```{r}
-
 #| eval: false
 
 nongeo_cluster <- hclustgeo(proxmat)
@@ -842,7 +842,6 @@ rect.hclust(nongeo_cluster,
 ### 8.2 Mapping the clusters formed
 
 ```{r}
-
 #| eval: false
 
 groups <- as.factor(cutree(nongeo_cluster, k=18))
@@ -858,7 +857,6 @@ qtm(nga_wp2_ngeo_cluster, "CLUSTER")
 Before we can performed spatially constrained hierarchical clustering, a spatial distance matrix will be derived by using [`st_distance()`](https://r-spatial.github.io/sf/reference/geos_measures.html) of sf package.
 
 ```{r}
-
 #| eval: false
 
 dist <- st_distance(nga_wp2, nga_wp2)
