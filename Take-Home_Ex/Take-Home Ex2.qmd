@@ -955,5 +955,5 @@ In summary, spatially constrained clustering is useful in segmenting geographica
 
 To further enhance the quality of data analysis, I proposed the following areas:
 
-1.  Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand sociodemographics of the population e.g. affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country, each region has its separate set of needs and thus consumption behaviour of water points.
+1.  Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand socio-demographics of the population e.g. affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country, each region has its separate set of needs and thus consumption behaviour of water points.
 2.  k-nearest neighbour - I would also propose to have more samples for different neighbours to compare the results as this will help strengthen the justification of high priority regions that requires attention.
