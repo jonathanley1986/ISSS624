@@ -931,6 +931,22 @@ ggparcoord(data = nga_wp2_Gcluster,
 
 Based on the results above, it shows that townships in Cluster 3, 4, 9, 10, 14, and 18 of Nigeria tend to have a higher proportion of functional water points. However Cluster 3, 4, 10 and 14 exhibit lower proportion of usage capacity below 1000.
 
+In the code chunk below, `group_by()` and `summarise()` of dplyr are used to derive mean values of the clustering variables.
+
+```{r}
+#| eval: false
+
+nga_wp2_Gcluster %>% 
+  st_set_geometry(NULL) %>%
+  group_by(CLUSTER) %>%
+  summarise(mean_pct_functional = mean(pct_functional),
+            mean_pct_non.functional = mean(pct_non.functional),
+            mean_pct_handpump = mean(pct_handpump),
+            mean_pct_usagecap_below1000 = mean(pct_usagecap_below1000),
+            mean_pct_rural = mean(pct_rural))
+
+```
+
 ## 9. Conclusion
 
 In summary, spatially constrained clustering is useful in segmenting geographical populations for better allocation of resources. The use of hierarchical clustering via agglomerative approach helps to group dissimilar groups together with no apriori information about the number of clusters required.
