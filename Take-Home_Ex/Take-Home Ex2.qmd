@@ -143,7 +143,7 @@ duplicate_area <- nga2$ADM2_REF [nga2$ADM2_REF %in%
 duplicate_area
 ```
 
-From the results, we identified 12 ADM2_REF that are duplicates. We will then leverage on interactive view of tmap to check the location of each area. With the help of Google Map, we will retrive the actual name and state of these areas.
+From the results, we identified 12 ADM2_REF that are duplicates. We will then leverage on interactive view of tmap to check the location of each area. With the help of Google Map, we will retrieve the actual name and state of these areas.
 
 | Index | Actual Area Name  |
 |-------|-------------------|
@@ -153,7 +153,8 @@ From the results, we identified 12 ADM2_REF that are duplicates. We will then le
 | 305   | Ifelodun (Osun)   |
 | 355   | Irepodun (Kawara) |
 | 356   | Irepodun (Osun)   |
-| 518   | Nassarawa         |
+| 519   | Nasarawa (Kano)   |
+| 520   | Nasarawa West     |
 | 546   | Obi (Benue)       |
 | 547   | Obi (Nasarawa)    |
 | 693   | Surulere (Lagos)  |
@@ -178,7 +179,7 @@ We will now access the individual index of the `nga2` data frame and change the 
 ```{r}
 #| eval: false
 
-nga2$ADM2_REF[c(94,95,304,305,355,356,519,546,547,693,694)] <- c("Bassa (Kogi)","Bassa (Plateau)", "Ifelodun (Kwara)","Ifelodun (Osun)", "Irepodun (Kwara)","Irepodun (Osun), Nassarawa","Obi (Benue)","Obi(Nasarawa)", "Surulere (Lagos)","Surulere (Oyo)")
+nga2$ADM2_REF[c(94,95,304,305,355,356,519,546,547,693,694)] <- c("Bassa (Kogi)","Bassa (Plateau)", "Ifelodun (Kwara)","Ifelodun (Osun)", "Irepodun (Kwara)","Irepodun (Osun)", "Nasarawa (Kano)","Obi (Benue)","Obi(Nasarawa)", "Surulere (Lagos)","Surulere (Oyo)")
 
 length((nga2$ADM2_REF[ nga2$ADM2_REF %in% nga2$ADM2_REF[duplicated(nga2$ADM2_REF)] ]))
 
@@ -450,7 +451,7 @@ qtm(nga_wp2, "pct_rural")
 ```
 
 ```{r}
-
+#| eval: false
 tm_shape(nga_wp2) +
     tm_polygons(c("wpt rural", "pct_rural"),
               style = "jenks") +
@@ -856,12 +857,12 @@ cr <- choicealpha(proxmat, distmat, range.alpha = seq(0, 1, 0.1), K=18, graph = 
 
 ```
 
-With reference to the graphs above, alpha = 0.3 will be used as shown in the code chunk below.
+With reference to the graphs above, alpha = 0.35 will be used as shown in the code chunk below.
 
 ```{r}
 #| eval: false
 
-clustG <- hclustgeo(proxmat, distmat, alpha = 0.3)
+clustG <- hclustgeo(proxmat, distmat, alpha = 0.35)
 ```
 
 Next, `cutree()` is used to derive the cluster object.
@@ -871,7 +872,7 @@ Next, `cutree()` is used to derive the cluster object.
 groups <- as.factor(cutree(clustG, k=18))
 ```
 
-We will then join back the group list with shan_sf polygon feature data frame by using the code chun below.
+We will then join back the group list with nga_wp2 polygon feature data frame by using the code chunk below.
 
 ```{r}
 #| eval: false
