@@ -1,0 +1,4 @@
+---
+title: "Hands-on Exercise 4 - Calibrating Hedonic Pricing Model for Private Highrise Property with GWR Method"
+editor: visual
+---
