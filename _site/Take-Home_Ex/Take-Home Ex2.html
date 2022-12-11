@@ -161,6 +161,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../Hands-on_Ex/Hands-on_Ex4.html">
  <span class="dropdown-text">Hands-on Exercise 4</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../Hands-on_Ex/Hands-on_Ex5.html">
+ <span class="dropdown-text">Hands-on Exercise 5</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -798,7 +802,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="z-score-standardization" class="level3">
 <h3 class="anchored" data-anchor-id="z-score-standardization">7.3 Z-score standardization</h3>
-<p>The code chunk below will be used to stadardisation the clustering variables by using Z-score method.</p>
+<p>The code chunk below will be used to standardise the clustering variables by using Z-score method.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>nga_wp2_hc.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(nga_wp2_hc)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(nga_wp2_hc.z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -913,7 +917,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We will apply heatmaply package to build both highly interactive cluster heatmap or static cluster heatmap.</p>
 <section id="transforming-the-data-frame-into-a-matrix" class="level4">
 <h4 class="anchored" data-anchor-id="transforming-the-data-frame-into-a-matrix">7.9.1 Transforming the data frame into a matrix</h4>
-<p>The data was loaded into a data frame, but it has to be a data matrix to make your heatmap.</p>
+<p>The data was loaded into a data frame, but it has to be a data matrix to make a heatmap.</p>
 <p>The code chunk below will be used to transform nga_wp2_hc_z_df data frame into a data matrix.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>nga_wp2_hc_z_df_mat <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(nga_wp2_hc_z_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -943,7 +947,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="mapping-the-clusters-formed" class="level3">
 <h3 class="anchored" data-anchor-id="mapping-the-clusters-formed">7.10 Mapping the clusters formed</h3>
-<p>With closed examination of the dendragram above, we have decided to retain 18 clusters.</p>
+<p>With closed examination of the dendrogram above, we have decided to retain 18 clusters.</p>
 <p><a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cutree.html"><em>cutree()</em></a> of R Base will be used in the code chunk below to derive a 18-cluster model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">cutree</span>(hclust_ward, <span class="at">k=</span><span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -962,7 +966,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(nga_wp2_cluster, <span class="st">"CLUSTER"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The choropleth map above reveals the clusters are very fragmented, especiallyin the central and southern part of Nigeria. There seems to be a more homogeneous distribution of similar clusters in the northern part of Nigeria.</p>
+<p>The choropleth map above reveals the clusters are very fragmented, especially in the central and southern part of Nigeria. There seems to be a more homogeneous distribution of similar clusters in the northern part of Nigeria.</p>
 </section>
 </section>
 <section id="spatially-constrained-clustering-clustgeo-method" class="level2">
@@ -1015,7 +1019,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>nga_wp2_Gcluster <span class="ot">&lt;-</span> <span class="fu">cbind</span>(nga_wp2, <span class="fu">as.matrix</span>(groups)) <span class="sc">%&gt;%</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">CLUSTER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">as.matrix.groups.</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can now plot the map of the newly delineated spatially constrained clusters. Based on the figure below, it shows that the clusters are less fragmented.</p>
+<p>We can now plot the map of the newly delineated spatially constrained clusters. Based on the figure below, it shows that the clusters are less fragmented. Furthermore, Cluster 10 appears to be more prevalent (cover wider geographical area) compared to the rest of the clusters.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(nga_wp2_Gcluster, <span class="st">"CLUSTER"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1033,7 +1037,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> CLUSTER) <span class="sc">+</span> </span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Based on the results above, it shows that townships in Cluster 3, 4, 9, 10, 14, and 18 of Nigeria tend to have a higher proportion of functional water points. However Cluster 3, 4, 10 and 14 exhibit lower proportion of usage capacity below 1000.</p>
+<p>Based on the results above, it shows that Cluster 3, 4 and 10 tend to have a higher proportion of functional water points. However Cluster 3, 4, 10 and 14 exhibit lower proportion of usage capacity below 1000.</p>
 <p>In the code chunk below, <code>group_by()</code> and <code>summarise()</code> of dplyr are used to derive mean values of the clustering variables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>nga_wp2_Gcluster <span class="sc">%&gt;%</span> </span>
@@ -1055,7 +1059,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="future-work">10. Future Work</h2>
 <p>To further enhance the quality of data analysis, I proposed the following areas:</p>
 <ol type="1">
-<li>Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand socio-demographics of the population e.g.&nbsp;affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country, each region has its separate set of needs and thus consumption behaviour of water points.</li>
+<li>Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand socio-demographics of the population e.g.&nbsp;affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country with heterogeneous population and development levels, we can expect that each region has its separate set of needs and thus consumption behaviour of water points and type of technology used to accommodate the varying consumption levels.</li>
 <li>k-nearest neighbour - I would also propose to have more samples for different neighbours to compare the results as this will help strengthen the justification of high priority regions that requires attention.</li>
 </ol>
 

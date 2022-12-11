@@ -592,7 +592,7 @@ ggarrange(f, nf, h, ucap, r,
 
 ### 7.3 Z-score standardization
 
-The code chunk below will be used to stadardisation the clustering variables by using Z-score method.
+The code chunk below will be used to standardise the clustering variables by using Z-score method.
 
 ```{r}
 #| eval: false
@@ -740,7 +740,7 @@ We will apply heatmaply package to build both highly interactive cluster heatmap
 
 #### 7.9.1 Transforming the data frame into a matrix
 
-The data was loaded into a data frame, but it has to be a data matrix to make your heatmap.
+The data was loaded into a data frame, but it has to be a data matrix to make a heatmap.
 
 The code chunk below will be used to transform nga_wp2_hc_z\_df data frame into a data matrix.
 
@@ -780,7 +780,7 @@ Based on the results above, it show that the many regions in Nigeria has a high 
 
 ### 7.10 Mapping the clusters formed
 
-With closed examination of the dendragram above, we have decided to retain 18 clusters.
+With closed examination of the dendrogram above, we have decided to retain 18 clusters.
 
 [*cutree()*](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cutree.html) of R Base will be used in the code chunk below to derive a 18-cluster model.
 
@@ -817,7 +817,7 @@ qtm(nga_wp2_cluster, "CLUSTER")
 
 ```
 
-The choropleth map above reveals the clusters are very fragmented, especiallyin the central and southern part of Nigeria. There seems to be a more homogeneous distribution of similar clusters in the northern part of Nigeria.
+The choropleth map above reveals the clusters are very fragmented, especially in the central and southern part of Nigeria. There seems to be a more homogeneous distribution of similar clusters in the northern part of Nigeria.
 
 ## 8. Spatially Constrained Clustering: ClustGeo Method
 
@@ -901,7 +901,7 @@ nga_wp2_Gcluster <- cbind(nga_wp2, as.matrix(groups)) %>%
 
 ```
 
-We can now plot the map of the newly delineated spatially constrained clusters. Based on the figure below, it shows that the clusters are less fragmented.
+We can now plot the map of the newly delineated spatially constrained clusters. Based on the figure below, it shows that the clusters are less fragmented. Furthermore, Cluster 10 appears to be more prevalent (cover wider geographical area) compared to the rest of the clusters.
 
 ```{r}
 #| eval: false
@@ -927,7 +927,7 @@ ggparcoord(data = nga_wp2_Gcluster,
 
 ```
 
-Based on the results above, it shows that townships in Cluster 3, 4, 9, 10, 14, and 18 of Nigeria tend to have a higher proportion of functional water points. However Cluster 3, 4, 10 and 14 exhibit lower proportion of usage capacity below 1000.
+Based on the results above, it shows that Cluster 3, 4 and 10 tend to have a higher proportion of functional water points. However Cluster 3, 4, 10 and 14 exhibit lower proportion of usage capacity below 1000.
 
 In the code chunk below, `group_by()` and `summarise()` of dplyr are used to derive mean values of the clustering variables.
 
@@ -953,5 +953,5 @@ In summary, spatially constrained clustering is useful in segmenting geographica
 
 To further enhance the quality of data analysis, I proposed the following areas:
 
-1.  Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand socio-demographics of the population e.g. affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country, each region has its separate set of needs and thus consumption behaviour of water points.
+1.  Socio-demographics - Instead of looking at the proportion of water points and technology of water points, we can attempt to understand socio-demographics of the population e.g. affluence, GDP per capita, population size etc. Given that Nigeria is a relatively large country with heterogeneous population and development levels, we can expect that each region has its separate set of needs and thus consumption behaviour of water points and type of technology used to accommodate the varying consumption levels.
 2.  k-nearest neighbour - I would also propose to have more samples for different neighbours to compare the results as this will help strengthen the justification of high priority regions that requires attention.
