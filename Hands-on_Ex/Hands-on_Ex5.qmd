@@ -1,4 +1,12 @@
 ---
-title: "Hands-on Exercise 5"
+title: "Hands-on Exercise 5 - Geograpgically Weighted Machine Learning"
 editor: visual
 ---
+
+## Overview
+
+In this lesson, I learnt the basic concepts and methods of machine learning techniques specially designed for geographical data. Upon completion of this lesson, you will able to:
+
+-   explain the similarities and differences between non-spatial Random Forest (RF) algorithm versus geographical weighted RF algorithm.
+
+-   calibrate predictive models by using appropriate geographically weighted RF algorithm for geographical data.
