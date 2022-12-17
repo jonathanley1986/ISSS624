@@ -163,7 +163,6 @@ Osun_wp <- Osun_wp_sf_clean %>%
 ```
 
 ```{r}
-
 #| eval: false
 
 cluster_vars.cor = cor(
