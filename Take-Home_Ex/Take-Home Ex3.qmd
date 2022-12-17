@@ -175,7 +175,7 @@ corrplot.mixed(cluster_vars.cor,
                tl.col = "black")
 ```
 
-### 3.2 Correlation Analysis
+### 3.2 Plotting Logistic Regression Model
 
 ```{r}
 #| eval: false
@@ -248,3 +248,57 @@ bw.fixed <- bw.ggwr(status ~
                     longlat = FALSE)
 
 ```
+
+```{r}
+#| eval: false
+bw.fixed
+```
+
+```{r}
+#| eval: false
+gwlr.fixed <- ggwr.basic(status ~
+                        distance_to_primary_road +
+                        distance_to_secondary_road +
+                        distance_to_city +
+                        distance_to_town +
+                        water_point_population +
+                        local_population_1km +
+                        is_urban +
+                        usage_capacity +
+                        water_source_clean,
+                        data = Osun_wp_sp,
+                        bw = bw.fixed,
+                        family = "binomial",
+                        kernel = "gaussian",
+                        adaptive = FALSE,
+                        longlat = FALSE)
+
+```
+
+```{r}
+#| eval: false
+gwlr.fixed
+```
+
+```{r}
+#| eval: false
+gwr.fixed <- as.data.frame(gwlr.fixed$SDF)
+```
+
+```{r}
+#| eval: false
+gwr.fixed <- gwr.fixed %>%
+  mutate(most = ifelse(
+    gwr.fixed$yhat >= 0.5, T, F))
+```
+
+```{r}
+#| eval: false
+gwr.fixed$y <- as.factor(gwr.fixed$y)
+gwr.fixed$most <- as.factor(gwr.fixed$most)
+CM <- confusionMatrix(data = gwr.fixed$most, reference = gwr.fixed$y)
+
+CM
+```
+
+### 3.3 Building Geographically Weighted Logic Regression (gwLR) model
