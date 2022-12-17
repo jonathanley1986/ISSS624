@@ -214,6 +214,8 @@ Osun_wp_sp <- Osun_wp_sf_clean %>%
            distance_to_primary_road,
            distance_to_secondary_road,
            distance_to_tertiary_road,
+           water_point_population,
+           local_population_1km,
            distance_to_city,
            distance_to_town,
            is_urban,
@@ -222,5 +224,27 @@ Osun_wp_sp <- Osun_wp_sf_clean %>%
   as_Spatial()
 
 Osun_wp_sp
+
+```
+
+```{r}
+#| eval: false
+
+bw.fixed <- bw.ggwr(status ~
+                      distance_to_primary_road +
+                      distance_to_secondary_road +
+                      distance_to_city +
+                      distance_to_town +
+                      water_point_population +
+                      local_population_1km +
+                      is_urban +
+                      usage_capacity +
+                      water_source_clean,
+                    data = Osun_wp_sp,
+                    family = "binomial",
+                    approach = "AIC",
+                    kernel = "gaussian",
+                    adaptive = FALSE,
+                    longlat = FALSE)
 
 ```
