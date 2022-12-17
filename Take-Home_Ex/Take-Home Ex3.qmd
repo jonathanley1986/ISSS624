@@ -3,7 +3,7 @@ title: "Take-Home Exercise 3 - Geograpgically Weighted Logistic Regression (GWLR
 editor: visual
 ---
 
-## Overview
+## 1. Overview
 
 In this lesson, I learn the basic concepts and methods of logistic regression specially designed for geographical data. Upon completion of this lesson, you will able to:
 
@@ -11,10 +11,185 @@ In this lesson, I learn the basic concepts and methods of logistic regression sp
 
 -   calibrate predictive models by using appropriate Geographically Weighted Logistic Regression algorithm for geographical data.
 
-Model Variables
+### 1.1 Overall Goal
+
+To build an explanatory model to discover factor affecting water point status in Osun State, Nigeria
+
+Study area: Orun State, Nigeria
+
+### **1.2 Model Variables**
 
 Dependent variable: Water point status (i.e. functional / non-functional)
 
 Independent variables:
 
-distance_to
+-   distance_to_primary_road
+
+-   distance_to_secondary_road
+
+-   distance_to_tertiary_road
+
+-   distance_to_city
+
+-   distance_to_town
+
+-   water_point_population
+
+-   local_population_1km
+
+-   usage_capacity
+
+-   is_urban
+
+-   water_source_clean
+
+## 2. Setup
+
+### **2.1** Packages Used
+
+The R packages that we will be using for this analysis area:
+
+-   **sf**: used for importing, managing, and processing geospatial data
+
+-   **spdep**: used for computing spatial weights, global and local spatial auto-correlation statistics
+
+-   **tidyverse**: used for wrangling attribute data
+
+-   **tmap**: used for creating cartographic quality choropleth map
+
+-   **coorplot, ggpubr:** used for multivariate data visualization and analysis
+
+-   **funModeling:** used for exploratory data analysis, data preparation and model performance
+
+In addition, the following tidyverse packages will be used:
+
+-   **readr** for reading rectangular data from csv, tsv and fwf
+
+-   **tidyr** for manipulating and tidying data
+
+-   **dplyr** for wrangling and transforming data
+
+-   **ggplot2** for visualising data
+
+### 2.2 Datasets Used
+
+For this exercise, the data sets will be used.
+
+### 2.3 Launching the packages in R
+
+The code chunk below is used to perform the following tasks:
+
+-   creating a package list containing the necessary R packages,
+
+-   checking if the R packages in the package list have been installed in R,
+
+    -   if they have yet to be installed, RStudio will installed the missing packages,
+
+-   launching the packages into R environment.
+
+```{r}
+#| eval: false
+pacman::p_load(sf, tidyverse, blorr, corrplot, ggpubr, spdep, GWmodel, tmap, skimr, caret, funModeling) 
+```
+
+### 2.4 Importing the Analytical Data
+
+```{r}
+#| eval: false
+Osun <- read_rds("rds/Osun.rds")
+Osun_wp_sf <- read_rds("rds/Osun_wp_sf.rds")
+```
+
+```{r}
+#| eval: false
+
+Osun_wp_sf %>%
+  freq(inpu = "status")
+```
+
+```{r}
+#| eval: false
+
+tmap_mode("view")
+tm_shape(Osun) + 
+  tm_polygons(alpha = 0.4) + 
+  tm_shape(Osun_wp_sf) + 
+  tm_dots(col = "status",
+          alpha = 0.6) +
+  tm_view(set.zoom.limits = c(9,12))
+
+```
+
+## 3. Summary Statistics with Skimr
+
+We can check the quality of data set in a tabular form. This will also help to select our independent variables.
+
+```{r}
+#| eval: false
+
+Osun_wp_sf %>%
+  skim()
+
+```
+
+The use of as.factor is to convert numerical to categorical variable (i.e. factors).
+
+```{r}
+#| eval: false
+Osun_wp_sf_clean <- Osun_wp_sf %>%
+  filter_at(vars(status,
+                  distance_to_primary_road,
+                  distance_to_secondary_road,
+                  distance_to_tertiary_road,
+                  distance_to_city,
+                  distance_to_town,
+                  water_point_population,
+                  local_population_1km,
+                  usage_capacity,
+                  is_urban,
+                  water_source_clean),
+             all_vars(!is.na(.))) %>%
+  mutate(usage_capacity = as.factor(usage_capacity))
+```
+
+### 3.1 Correlation Analysis
+
+```{r}
+#| eval: false
+Osun_wp <- Osun_wp_sf_clean %>%
+  select(c(7,35:39,42:43, 46:47,57)) %>%
+  st_set_geometry(NULL)
+
+```
+
+```{r}
+
+#| eval: false
+
+cluster_vars.cor = cor(
+  Osun_wp[,2:7])
+corrplot.mixed(cluster_vars.cor,
+               lower = "ellipse",
+               upper = "number",
+               tl.pos = "lt",
+               diag = "l",
+               tl.col = "black")
+```
+
+### 3.2 Correlation Analysis
+
+```{r}
+#| eval: false
+model <- glm(status ~ distance_to_primary_road +
+              distance_to_secondary_road +
+              distance_to_tertiary_road + 
+              distance_to_city +
+              distance_to_town +
+              is_urban + 
+              usage_capacity + 
+              water_source_clean +
+              water_point_population +
+              local_population_1km,
+             data = Osun_wp_sf_clean,
+             family = binomial(link = "logit"))
+```
