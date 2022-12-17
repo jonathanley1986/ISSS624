@@ -1,0 +1,20 @@
+---
+title: "Take-Home Exercise 3 - Geograpgically Weighted Logistic Regression (GWLR) and Application"
+editor: visual
+---
+
+## Overview
+
+In this lesson, I learn the basic concepts and methods of logistic regression specially designed for geographical data. Upon completion of this lesson, you will able to:
+
+-   explain the similarities and differences between Logistic Regression (LR) algorithm versus geographical weighted Logistic Regression (GWLR) algorithm.
+
+-   calibrate predictive models by using appropriate Geographically Weighted Logistic Regression algorithm for geographical data.
+
+Model Variables
+
+Dependent variable: Water point status (i.e. functional / non-functional)
+
+Independent variables:
+
+distance_to
