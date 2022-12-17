@@ -192,3 +192,10 @@ model <- glm(status ~ distance_to_primary_road +
              data = Osun_wp_sf_clean,
              family = binomial(link = "logit"))
 ```
+
+The code chunk below changes the regression model into a report format.
+
+```{r}
+
+blr_regress(model)
+```
