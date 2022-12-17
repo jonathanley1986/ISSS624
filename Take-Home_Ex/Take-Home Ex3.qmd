@@ -189,13 +189,13 @@ model <- glm(status ~ distance_to_primary_road +
               water_source_clean +
               water_point_population +
               local_population_1km,
-             data = Osun_wp_sf_clean,
-             family = binomial(link = "logit"))
+              data = Osun_wp_sf_clean,
+              family = binomial(link = "logit"))
 ```
 
 The code chunk below changes the regression model into a report format.
 
 ```{r}
-
+#| eval: false
 blr_regress(model)
 ```
