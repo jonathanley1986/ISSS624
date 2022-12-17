@@ -199,3 +199,28 @@ The code chunk below changes the regression model into a report format.
 #| eval: false
 blr_regress(model)
 ```
+
+```{r}
+#| eval: false
+
+blr_confusion_matrix(model, cutoff = 0.5)
+```
+
+```{r}
+#| eval: false
+
+Osun_wp_sp <- Osun_wp_sf_clean %>%
+  select(c(status,
+           distance_to_primary_road,
+           distance_to_secondary_road,
+           distance_to_tertiary_road,
+           distance_to_city,
+           distance_to_town,
+           is_urban,
+           usage_capacity, 
+           water_source_clean)) %>%
+  as_Spatial()
+
+Osun_wp_sp
+
+```
