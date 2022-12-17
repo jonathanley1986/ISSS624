@@ -301,4 +301,145 @@ CM <- confusionMatrix(data = gwr.fixed$most, reference = gwr.fixed$y)
 CM
 ```
 
-### 3.3 Building Geographically Weighted Logic Regression (gwLR) model
+### 3.3 Plotting Geographical Weighted Logistic Regression Model
+
+```{r}
+#| eval: false
+Osun_wp_sf_selected <- Osun_wp_sf_clean %>%
+  select(c(ADM2_EN, ADM2_PCODE,
+           ADM1_EN, ADM1_PCODE,
+           status))
+
+gwr_sf.fixed <- cbind(Osun_wp_sf_selected, gwr.fixed)
+
+tmap_mode("view")
+prob_T <- tm_shape(Osun) +
+  tm_polygons(alpha = 0.1) +
+  tm_shape(gwr_sf.fixed) +
+  tm_dots(col = "yhat",
+          border.col = "gray60",
+          border.lwd = 1) +
+  tm_view(set.zoom.limits = c(9, 14))
+
+prob_T
+
+```
+
+## 4 Re-run Logistic Regression Model without insignificant variables
+
+```{r}
+#| eval: false
+model_rerun <- glm(status ~ distance_to_primary_road +
+              distance_to_city +
+              distance_to_town +
+              is_urban + 
+              usage_capacity + 
+              water_source_clean +
+              water_point_population +
+              local_population_1km,
+              data = Osun_wp_sf_clean,
+              family = binomial(link = "logit"))
+```
+
+```{r}
+#| eval: false
+blr_regress(model_rerun)
+```
+
+```{r}
+#| eval: false
+
+blr_confusion_matrix(model_rerun, cutoff = 0.5)
+```
+
+```{r}
+#| eval: false
+
+Osun_wp_sp_rerun <- Osun_wp_sf_clean %>%
+  select(c(status,
+           distance_to_primary_road,
+           water_point_population,
+           local_population_1km,
+           distance_to_city,
+           distance_to_town,
+           is_urban,
+           usage_capacity, 
+           water_source_clean)) %>%
+  as_Spatial()
+
+Osun_wp_sp_rerun
+
+```
+
+```{r}
+#| eval: false
+
+bw.fixed_rerun <- bw.ggwr(status ~
+                      distance_to_primary_road +
+                      distance_to_town +
+                      water_point_population +
+                      local_population_1km +
+                      is_urban +
+                      usage_capacity +
+                      water_source_clean,
+                    data = Osun_wp_sp,
+                    family = "binomial",
+                    approach = "AIC",
+                    kernel = "gaussian",
+                    adaptive = FALSE,
+                    longlat = FALSE)
+```
+
+```{r}
+#| eval: false
+bw.fixed_rerun
+```
+
+```{r}
+#| eval: false
+gwlr.fixed_rerun <- ggwr.basic(status ~
+                        distance_to_primary_road +
+                        distance_to_town +
+                        water_point_population +
+                        local_population_1km +
+                        is_urban +
+                        usage_capacity +
+                        water_source_clean,
+                        data = Osun_wp_sp,
+                        bw = bw.fixed_rerun,
+                        family = "binomial",
+                        kernel = "gaussian",
+                        adaptive = FALSE,
+                        longlat = FALSE)
+
+```
+
+```{r}
+#| eval: false
+gwlr.fixed_rerun
+```
+
+```{r}
+#| eval: false
+gwr.fixed_rerun <- as.data.frame(gwlr.fixed_rerun$SDF)
+```
+
+```{r}
+#| eval: false
+gwr.fixed_rerun <- gwr.fixed_rerun %>%
+  mutate(most = ifelse(
+    gwr.fixed_rerun$yhat >= 0.5, T, F))
+```
+
+```{r}
+#| eval: false
+gwr.fixed_rerun$y <- as.factor(gwr.fixed_rerun$y)
+gwr.fixed_rerun$most <- as.factor(gwr.fixed_rerun$most)
+CM_rerun <- confusionMatrix(data = gwr.fixed_rerun$most, reference = gwr.fixed_rerun$y)
+
+CM_rerun
+```
+
+## 5 Conclusion
+
+On hindsight, geographical weighted logistic regression (GWLR) is more accurate than general logistic regression when there is an influence of some variables with geographical location. Hence, there is a need to use spatially non-stationary regression model.
